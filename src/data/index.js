@@ -1,0 +1,1 @@
+export { default as FetchHotFeed} from './hot-feed'

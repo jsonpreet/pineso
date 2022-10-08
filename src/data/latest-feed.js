@@ -3,11 +3,11 @@ import { getImageSize } from "@app/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getLatestFeed = async () => {
+export const getLatestFeed = async ({limit}) => {
     const pins = [];
     const endpoint = 'get-posts-stateless';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        NumToFetch: 150,
+        NumToFetch: limit ? limit : 150,
         MediaRequired: true,
     });
     if (response === null) {
@@ -29,6 +29,6 @@ export const getLatestFeed = async () => {
     }
 }
 
-export const FetchLatestFeed = () => {
-    return useQuery(['latestfeed'], getLatestFeed);
+export const FetchLatestFeed = ({limit}) => {
+    return useQuery(['latestfeed', limit], ({limit}) => getLatestFeed({limit}));
 }

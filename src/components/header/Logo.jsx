@@ -4,8 +4,8 @@ const Logo = () => {
         <div className="flex flex-row justify-center items-center">
             <Image
                 src='/logo.png'
-                width={34}
-                height={50}
+                width={36}
+                height={55}
                 alt='Pineso'
             />
             <span className="ml-2 text-3xl uppercase font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#ec05ad] to-[#5634ee]">Pineso</span>

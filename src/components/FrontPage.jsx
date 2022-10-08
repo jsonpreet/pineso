@@ -38,7 +38,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
         page = parseInt(ctx.query.page);
     }
 
-    const queryClient = new QueryClient(config);
+    const queryClient = new QueryClient();
 
     let isError = false;
 

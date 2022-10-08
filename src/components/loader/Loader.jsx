@@ -21,20 +21,20 @@ export function Loader() {
   )
 }
 
-export function FetchingLoader() {
+export function FetchingLoader({message}) {
   return (
     <div className='flex flex-col justify-center items-center bg-white h-screen -my-[140px]'>
       <Loader />
-      <div className='text-black mt-[30px] text-3xl font-semibold'>We are Fetching new Pics for you.</div>
+      <div className='text-black mt-[30px] text-3xl font-semibold'>{message ? message : `We are Fetching new Pins for you.`}</div>
     </div>
   )
 }
 
-export function LoadingLoader() {
+export function LoadingLoader({message}) {
   return (
     <div className='flex flex-col justify-center items-center bg-white h-screen -my-[140px]'>
       <Loader />
-      <div className='text-black mt-[30px] text-3xl font-semibold'>Loading Latest Pics for you.</div>
+      <div className='text-black mt-[30px] text-3xl font-semibold'>{message ? message : `Loading Latest Pins for you.`}</div>
     </div>
   )
 }

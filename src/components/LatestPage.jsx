@@ -6,7 +6,7 @@ import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/
 import { config } from '@app/lib/constants'
 
 const LatestPage = () => {
-    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchLatestFeed()
+    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchLatestFeed({ limit: 200 });
     
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
@@ -38,7 +38,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
         page = parseInt(ctx.query.page);
     }
 
-    const queryClient = new QueryClient(config);
+    const queryClient = new QueryClient();
 
     let isError = false;
 

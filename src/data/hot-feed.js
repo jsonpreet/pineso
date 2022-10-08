@@ -1,5 +1,5 @@
-import { BASE_URI } from "@app/lib/constants";
-import { getImageSize } from "@app/lib/utils";
+import { BASE_URI, SUPPORTED_FORMATS } from "@app/lib/constants";
+import { getImageSize, get_url_extension } from "@app/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 

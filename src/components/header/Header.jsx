@@ -26,24 +26,37 @@ const Header = () => {
         setAccount(user);
         setUserLoggedIn(isLoggedIn);
     }, [isLoggedIn])
-    
-    const request = {
-        "publicKey": "",
-        "transactionSpendingLimitResponse": {
-            "GlobalDESOLimit": 100000000000,
-            "TransactionCountLimitMap": {
-            "SUBMIT_POST": 100000,
-            "FOLLOW": 100000
-            },
-        }
-    };
 
     const login = async () => {
+        const request = {
+            "publicKey": "",
+            "transactionSpendingLimitResponse": {
+                "GlobalDESOLimit": 100000000000,
+                "TransactionCountLimitMap": {
+                "SUBMIT_POST": 100000,
+                "FOLLOW": 100000
+                },
+            }
+        };
         if (deso) {
             const response = await deso.identity.derive(request);
             if (response) {
                 setUser(response)
                 setLoggedIn(true)
+            } else {
+                console.log(response);
+            }
+        }
+    }
+
+    const logout = async () => {
+        console.log(user?.publicKeyBase58Check);
+        const request = user?.publicKeyBase58Check;
+        if (deso) {
+            const response = await deso.identity.logout(request);
+            if (response) {
+                setUser({})
+                setLoggedIn(false)
             } else {
                 console.log(response);
             }
@@ -89,7 +102,7 @@ const Header = () => {
             </div>
             <div className="flex flex-row relative mr-4 justify-end items-center">
                 {loggedIn ? 
-                    <a className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Logout</a>
+                    <a onClick={() => logout()} className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Logout</a>
                     :
                     <a onClick={() => login()} className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Login</a>
                 }                

@@ -7,12 +7,16 @@ import '@styles/globals.css';
 import '@styles/app.scss';
 import { config } from '@app/lib/constants';
 import { Suspense, useState } from 'react';
+import Head from 'next/head';
 
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient(config));
   return (
     <>
+      <Head>
+          <title>Pineso</title>
+      </Head>
       <NextNProgress color="#5634ee" showOnShallow={true} />
       <ThemeProvider enableSystem={true} attribute="class">
         <QueryClientProvider client={queryClient}>

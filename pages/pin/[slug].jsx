@@ -66,15 +66,17 @@ const Single = () => {
                         <div ref={rootRef} className='hidden' style={{ width: `${imageSize?.width}px`, height: `${imageSize?.height}px`, backgroundImage: `url(${post.ImageURLs[0]})`}}/>
                         <div className='w-2/4 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] rounded-3xl mx-auto'>
                             <div className='flex flex-row'>
-                                <div className='image w-2/4 flex rounded-bl-3xl rounded-tl-3xl'>
+                                <div className='image w-2/4 relative overflow-hidden border border-white/50 h-100 rounded-bl-3xl rounded-tl-3xl flex flex-col items-center justify-center p-4'>
+                                    <div style={{ backgroundImage: `url(${post.ImageURLs[0]})`, filter: 'blur(3px)', opacity: '.1'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/>    
                                     <LazyLoadImage
-                                        className='rounded-bl-3xl rounded-tl-3xl'
+                                        className='rounded-3xl shadow-xl'
                                         alt='Picture of the author'
                                         effect="blur"
+                                        wrapperProps={{ className: 'flex flex-col z-10 rounded-3xl items-center justify-center ' }}
                                         src={post.ImageURLs[0]}
-                                    />
+                                        />
                                 </div>
-                                <div className='content flex flex-col w-2/4 pt-8 pb-0 px-8'>
+                                <div className='content flex flex-col w-2/4 pt-8 pb-4 px-8'>
                                     <ShareCard rootRef={rootRef} post={post} />
                                     <UserCard user={user} post={post.ProfileEntryResponse} follows={follows} isFollowing={isFollowing} />
                                     <div className='mt-4 break-words'>

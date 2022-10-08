@@ -1,12 +1,16 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getHotFeed, FetchHotFeed } from '@data/hot-feed'
+import { getFollowingFeed, FetchFollowingFeed } from '@data/following-feed'
 import { withCSR } from '@lib/utils'
 import { config } from '@app/lib/constants'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
+import useApp from '@app/stores/store'
 
 const FrontPage = () => {
-    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchHotFeed()
+    const user = useApp((state) => state.user)
+    const isLoggedIn = useApp((state) => state.isLoggedIn)
+    console.log(user)
+    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchFollowingFeed(user.publicKeyBase58Check)
     
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
@@ -33,6 +37,9 @@ const FrontPage = () => {
 export default FrontPage
 
 export const getServerSideProps = withCSR(async (ctx) => {
+    
+    const user = useApp((state) => state.user)
+    const publicKey = user.publicKeyBase58Check;
     let page = 1;
     if (ctx.query.page) {
         page = parseInt(ctx.query.page);
@@ -43,7 +50,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['hotfeed'], getHotFeed);
+        await queryClient.prefetchQuery([['following-feed', publicKey], {publicKey}], getFollowingFeed);
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

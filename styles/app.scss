@@ -12,3 +12,12 @@ body {
     border-radius: 100px!important;
     text-align: center!important;
 }
+
+.imageBG{
+    background-image: url('/dotted.svg');
+    background-size: 15%;
+    opacity:.35;
+    object-fit: cover;
+    inset: 0;
+    position: absolute;
+}

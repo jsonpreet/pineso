@@ -1,17 +1,17 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getLatestFeed, FetchLatestFeed } from '@data/latest-feed'
+import { getHotFeed, FetchHotFeed } from '@data/hot-feed'
 import { withCSR } from '@lib/utils'
+import { config } from '@app/lib/constants'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
-import { config } from '@app/lib/constants'
 
-const LatestPage = () => {
-    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchLatestFeed({ limit: 200 });
+const HotPage = () => {
+    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchHotFeed()
     
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
     }
-    if (isLoading) {
+    if (isLoading) { 
         return ( <LoadingLoader/> )
     }
     if (isFetching) {
@@ -30,7 +30,7 @@ const LatestPage = () => {
     }
 }
 
-export default LatestPage
+export default HotPage
 
 export const getServerSideProps = withCSR(async (ctx) => {
     let page = 1;
@@ -43,7 +43,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['latestfeed'], getLatestFeed({ limit: 200 }));
+        await queryClient.prefetchQuery(['hotfeed'], getHotFeed);
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

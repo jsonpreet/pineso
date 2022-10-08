@@ -1,19 +1,21 @@
-import { BASE_URI, SUPPORTED_FORMATS } from "@app/lib/constants";
-import { getImageSize, get_url_extension } from "@app/lib/utils";
+import { BASE_URI } from "@app/lib/constants";
+import { getImageSize } from "@app/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getHotFeed = async () => {
+export const getFollowingFeed = async ({queryKey}) => {
+    const [_key, { publicKey }] = queryKey
     const pins = [];
-    const endpoint = 'get-hot-feed';
+    const endpoint = 'get-posts-for-public-key';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 300,
+        PublicKeyBase58Check: publicKey,
+        NumToFetch: 150,
+        MediaRequired: true,
     });
     if (response === null) {
         return null
     } else {
-        const posts = response.data.HotFeedPage;
-
+        const posts = response.data.Posts;
         const filtered = posts.filter(post => {
             return post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
         });
@@ -28,8 +30,8 @@ export const getHotFeed = async () => {
     }
 }
 
-export const FetchHotFeed = () => {
-    return useQuery(['hotfeed'], getHotFeed, {
+export const FetchFollowingFeed = (publicKey) => {
+    return useQuery([['following-feed', publicKey], {publicKey}] , getFollowingFeed, {
         keepPreviousData: true,
     });
 }

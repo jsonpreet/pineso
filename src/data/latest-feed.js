@@ -30,5 +30,7 @@ export const getLatestFeed = async ({limit}) => {
 }
 
 export const FetchLatestFeed = ({limit}) => {
-    return useQuery(['latestfeed', limit], ({limit}) => getLatestFeed({limit}));
+    return useQuery(['latestfeed', limit], ({limit}) => getLatestFeed({limit}), {
+        keepPreviousData: true,
+    });
 }

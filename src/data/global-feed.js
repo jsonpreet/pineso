@@ -3,12 +3,13 @@ import { getImageSize, get_url_extension } from "@app/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getHotFeed = async () => {
+export const getGlobalFeed = async () => {
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         ResponseLimit: 300,
         FetchSubcomments: true,
+        GetPostsForGlobalWhitelist: true,
         MediaRequired: true,
         SortByNew: true
     });
@@ -31,8 +32,8 @@ export const getHotFeed = async () => {
     }
 }
 
-export const FetchHotFeed = () => {
-    return useQuery(['hotfeed'], getHotFeed, {
+export const FetchGlobalFeed = () => {
+    return useQuery(['global-feed'], getGlobalFeed, {
         keepPreviousData: true,
     });
 }

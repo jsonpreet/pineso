@@ -9,7 +9,6 @@ import useApp from '@app/stores/store'
 const FrontPage = () => {
     const user = useApp((state) => state.user)
     const isLoggedIn = useApp((state) => state.isLoggedIn)
-    console.log(user)
     const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchFollowingFeed(user.publicKeyBase58Check)
     
     if (isError) {
@@ -18,9 +17,9 @@ const FrontPage = () => {
     if (isLoading) { 
         return ( <LoadingLoader/> )
     }
-    if (isFetching) {
-        return ( <FetchingLoader /> )
-    }
+    // if (isFetching) {
+    //     return ( <FetchingLoader /> )
+    // }
     if (isFetched) {
         return (
             <>

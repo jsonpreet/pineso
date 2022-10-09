@@ -1,17 +1,13 @@
-import axios from 'axios'
-import { BASE_URI } from './constants';
+import Link from 'next/link';
 import reactImageSize from 'react-image-size'
 
-export const fetcher = url => axios.get(url).then(res => res.data)
+export function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 export function determineNewHeight(originalHeight, originalWidth, newWidth) {
     const height = Math.round((originalHeight / originalWidth) * newWidth);
     return height;
-}
-
-export async function getHotFeed(request)  {
-    const endpoint = 'get-hot-feed';
-    return await axios.post(`${BASE_URI}/${endpoint}`, request);
 }
 
 export const getImageSize = async (url) => {

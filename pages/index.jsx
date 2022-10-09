@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
       <Layout>
-        { isLoggedIn ? <FrontPage/> : <HotPage/> }
+        <HotPage/>
       </Layout>
     </>
   )

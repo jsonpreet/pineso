@@ -21,7 +21,7 @@ export const getSinglePost = async ({ queryKey }) => {
 }
 
 export const FetchSinglePost = ({slug}) => {
-    return useQuery([['single-post', `${slug}`], { slug }], getSinglePost, {
+    return useQuery([['single-post', slug], { slug }], getSinglePost, {
         keepPreviousData: true,
     });
 }

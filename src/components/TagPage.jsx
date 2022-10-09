@@ -1,12 +1,15 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getLatestFeed, FetchLatestFeed } from '@data/latest-feed'
+import { FetchSingleTagFeed, getSingleTagFeed } from '@app/data/single-tag';
 import { withCSR } from '@lib/utils'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
-import { config } from '@app/lib/constants'
+import { useRouter } from 'next/router';
 
-const LatestPage = () => {
-    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchLatestFeed({ limit: 200 });
+const TagPage = () => {
+    const router = useRouter();
+    if (!router) return null
+    const slug = router.query.slug;
+    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchSingleTagFeed({ slug });
     
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
@@ -30,20 +33,21 @@ const LatestPage = () => {
     }
 }
 
-export default LatestPage
+export default TagPage
 
 export const getServerSideProps = withCSR(async (ctx) => {
     let page = 1;
     if (ctx.query.page) {
         page = parseInt(ctx.query.page);
     }
+    const { slug } = ctx.params;
 
     const queryClient = new QueryClient();
 
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['latestfeed'], getLatestFeed({ limit: 200 }));
+        await queryClient.prefetchQuery([['single-tag', slug], { slug }], getSingleTagFeed);
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

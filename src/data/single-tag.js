@@ -3,14 +3,16 @@ import { getImageSize, get_url_extension } from "@app/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getHotFeed = async () => {
+export const getSingleTagFeed = async ({ queryKey }) => {
+    const [_key, { slug }] = queryKey;
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         ResponseLimit: 300,
         FetchSubcomments: true,
         MediaRequired: true,
-        SortByNew: true
+        SortByNew: true,
+        Tag: '#' + slug,
     });
     if (response === null) {
         return null
@@ -31,8 +33,8 @@ export const getHotFeed = async () => {
     }
 }
 
-export const FetchHotFeed = () => {
-    return useQuery(['hotfeed'], getHotFeed, {
+export const FetchSingleTagFeed = ({slug}) => {
+    return useQuery([['single-tag', slug], { slug }], getSingleTagFeed, {
         keepPreviousData: true,
     });
 }

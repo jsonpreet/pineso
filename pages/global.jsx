@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import FrontPage from '@app/components/HotPage'
+import GlobalPage from '@app/components/GlobalPage'
 import { Layout } from '@app/components/layout'
 
 const HotPage = () => {
   return (
     <>
       <Layout>
-        <FrontPage/>
+        <GlobalPage/>
       </Layout>
     </>
   )

@@ -22,7 +22,7 @@ const Post = ({post, scrollPosition}) => {
                 animate={{ y: 0 }}
                 transition={{
                     default: {
-                        duration: 0.3,
+                        duration: 0.4,
                         ease: [0, 0.71, 0.2, 1.01]
                     },
                 }}
@@ -30,7 +30,7 @@ const Post = ({post, scrollPosition}) => {
                 <Link href={`/pin/${post.PostHashHex}`} passHref shallow={true}>
                     <a className='cursor-zoom group flex relative flex-col' onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
                         <LazyLoadImage
-                            alt='Picture of the author'
+                            alt={`Pin by ${post.ProfileEntryResponse?.Username}`}
                             effect="blur"
                             beforeLoad={() => setLoading(true)}
                             afterLoad={() => setLoading(false)}

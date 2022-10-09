@@ -1,12 +1,12 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getLatestFeed, FetchLatestFeed } from '@data/latest-feed'
+import { getNFTFeed, FetchNFTFeed } from '@data/nft-feed'
 import { withCSR } from '@lib/utils'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
 import { config } from '@app/lib/constants'
 
-const LatestPage = () => {
-    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchLatestFeed({ limit: 200 });
+const NFTPage = () => {
+    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchNFTFeed();
     
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
@@ -30,7 +30,7 @@ const LatestPage = () => {
     }
 }
 
-export default LatestPage
+export default NFTPage
 
 export const getServerSideProps = withCSR(async (ctx) => {
     let page = 1;
@@ -43,7 +43,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['latestfeed'], getLatestFeed({ limit: 200 }));
+        await queryClient.prefetchQuery(['nft-feed'], getNFTFeed({ limit: 200 }));
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

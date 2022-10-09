@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { BiSearch } from "react-icons/bi";
 import Logo from "./Logo";
 import Deso from 'deso-protocol';
 import useApp from "@app/stores/store";
+import { useRouter } from "next/router";
+import { Menu, Transition, Switch } from '@headlessui/react'
+import { IoChevronDownCircleOutline } from "react-icons/io5";
+import { classNames } from "@app/lib/utils";
+import UserImage from "@components/ui/UserImage";
+import { getSingleProfile } from "@app/data/single-profile";
 
 const Header = () => {
-
+    const router = useRouter()
     const user = useApp((state) => state.user)
     const isLoggedIn = useApp((state) => state.isLoggedIn)
     const setUser = useApp((state) => state.setUser)
@@ -41,7 +47,8 @@ const Header = () => {
         if (deso) {
             const response = await deso.identity.derive(request);
             if (response) {
-                setUser(response)
+                const data = await getSingleProfile(response.publicKeyBase58Check);
+                setUser({profile: data, data: response});
                 setLoggedIn(true)
             } else {
                 console.log(response);
@@ -50,8 +57,7 @@ const Header = () => {
     }
 
     const logout = async () => {
-        console.log(user?.publicKeyBase58Check);
-        const request = user?.publicKeyBase58Check;
+        const request = user?.profile?.PublicKeyBase58Check;
         if (deso) {
             const response = await deso.identity.logout(request);
             if (response) {
@@ -77,7 +83,7 @@ const Header = () => {
     // };
     
     return (
-        <div className={`header-section fixed flex top-0 left-0 w-full bg-opacity-50 z-10 flex-row h-[70px] box-border py-2 px-4 bg-white backdrop-blur-3xl`}>
+        <div className={`header-section fixed z-20 flex top-0 left-0 w-full bg-opacity-50 flex-row h-[70px] box-border py-2 px-4 bg-white backdrop-blur-3xl`}>
             <div>
                 <Link href="/" className="cursor-pointer">
                     <a><Logo/></a>
@@ -85,13 +91,16 @@ const Header = () => {
             </div>
             <div className="flex flex-row ml-4 justify-center items-center">
                 <Link href="/">
-                    <a className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Home</a>
+                    <a className={`px-4 py-2 mr-1 text-md font-semibold ${router.pathname === '/' ? `bg-black text-white hover:bg-[#5634ee]` : `hover:bg-black hover:text-white`} rounded-full duration-75 delay-75`}>Home</a>
                 </Link>
-                <Link href="/hot">
-                    <a className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Hot</a>
+                <Link href="/global">
+                    <a className={`px-4 py-2 mr-1 text-md font-semibold ${router.pathname === '/global' ? `bg-black text-white hover:bg-[#5634ee]` : `hover:bg-black hover:text-white`} rounded-full duration-75 delay-75`}>Global</a>
                 </Link>
                 <Link href="/latest">
-                    <a className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Latest</a>
+                    <a className={`px-4 py-2 mr-1 text-md font-semibold ${router.pathname === '/latest' ? `bg-black text-white hover:bg-[#5634ee]` : `hover:bg-black hover:text-white`} rounded-full duration-75 delay-75`}>Latest</a>
+                </Link>
+                <Link href="/nft">
+                    <a className={`px-4 py-2 mr-1 text-md font-semibold ${router.pathname === '/nft' ? `bg-black text-white hover:bg-[#5634ee]` : `hover:bg-black hover:text-white`} rounded-full duration-75 delay-75`}>NFT's</a>
                 </Link>
             </div>
             <div className="flex flex-row flex-1 mx-4 justify-center items-center">
@@ -102,9 +111,69 @@ const Header = () => {
             </div>
             <div className="flex flex-row relative mr-4 justify-end items-center">
                 {loggedIn ? 
-                    <a onClick={() => logout()} className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Logout</a>
+                    <div className="flex flex-row relative items-center justify-end">
+                        <div>
+                            <div className="flex items-center justify-center mr-2">
+                                <Link href={`/${user?.profile?.Username}`} passHref>
+                                    <a>
+                                        <UserImage username={user?.profile?.Username} publickey={user?.profile?.PublicKeyBase58Check} classes={'w-8 h-8 rounded-full'} />
+                                    </a>
+                                </Link>
+                            </div>
+                        </div>
+                        <div>
+                            <Menu as="div" className="relative inline-block text-left">
+                                <div>
+                                    <Menu.Button className="inline-flex w-full justify-center hover:bg-gray-200 p-2 rounded-full duration-75 delay-75 items-center shadow-none text-sm font-medium text-gray-700 focus:outline-none">
+                                        <IoChevronDownCircleOutline className="h-5 w-5" aria-hidden="true" />
+                                    </Menu.Button>
+                                </div>
+
+                                <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95"
+                                >
+                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div className="py-1">
+                                        <Menu.Item>
+                                        {({ active }) => (
+                                            <Link href="/">
+                                            <a
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                'block px-4 py-2 text-sm'
+                                            )}>Support</a>
+                                            </Link>
+                                        )}
+                                        </Menu.Item>
+                                    </div>
+                                    <div className="py-1">
+                                        <Menu.Item>
+                                        {({ active }) => (
+                                            <button onClick={() => logout()}
+                                            type="button"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                'block px-4 py-2 w-full text-left text-sm'
+                                            )}
+                                            >
+                                            Log out
+                                            </button>
+                                        )}
+                                        </Menu.Item>
+                                    </div>
+                                    </Menu.Items>
+                                </Transition>
+                            </Menu>
+                        </div>
+                    </div>
                     :
-                    <a onClick={() => login()} className="px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Login</a>
+                    <a onClick={() => login()} className="cursor-pointer px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Login</a>
                 }                
             </div>
         </div>

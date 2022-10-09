@@ -1,13 +1,13 @@
-import { BASE_URI, SUPPORTED_FORMATS } from "@app/lib/constants";
-import { getImageSize, get_url_extension } from "@app/lib/utils";
+import { BASE_URI } from "@app/lib/constants";
+import { getImageSize } from "@app/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getHotFeed = async () => {
+export const getNFTFeed = async () => {
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 300,
+        ResponseLimit: 600,
         FetchSubcomments: true,
         MediaRequired: true,
         SortByNew: true
@@ -16,9 +16,8 @@ export const getHotFeed = async () => {
         return null
     } else {
         const posts = response.data.HotFeedPage;
-
         const filtered = posts.filter(post => {
-            return post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
+            return post.IsNFT === true && post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
         });
 
         filtered.map(async (post) => {
@@ -31,8 +30,8 @@ export const getHotFeed = async () => {
     }
 }
 
-export const FetchHotFeed = () => {
-    return useQuery(['hotfeed'], getHotFeed, {
+export const FetchNFTFeed = () => {
+    return useQuery(['nft-feed'], getNFTFeed, {
         keepPreviousData: true,
     });
 }

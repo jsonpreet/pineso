@@ -1,17 +1,20 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getLatestFeed, FetchLatestFeed } from '@data/latest-feed'
+import { getGlobalFeed, FetchGlobalFeed } from '@data/global-feed'
 import { withCSR } from '@lib/utils'
+import { config } from '@app/lib/constants'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
-import { config } from '@app/lib/constants'
+import useApp from '@app/stores/store'
 
-const LatestPage = () => {
-    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchLatestFeed({ limit: 200 });
+const GlobalPage = () => {
+    const user = useApp((state) => state.user)
+    const isLoggedIn = useApp((state) => state.isLoggedIn)
+    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchGlobalFeed()
     
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
     }
-    if (isLoading) {
+    if (isLoading) { 
         return ( <LoadingLoader/> )
     }
     // if (isFetching) {
@@ -30,9 +33,10 @@ const LatestPage = () => {
     }
 }
 
-export default LatestPage
+export default GlobalPage
 
 export const getServerSideProps = withCSR(async (ctx) => {
+    
     let page = 1;
     if (ctx.query.page) {
         page = parseInt(ctx.query.page);
@@ -43,7 +47,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['latestfeed'], getLatestFeed({ limit: 200 }));
+        await queryClient.prefetchQuery(['global-feed'], getGlobalFeed);
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

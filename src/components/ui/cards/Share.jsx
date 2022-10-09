@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react'
 import { HiDotsHorizontal, HiOutlineDownload, HiOutlineLink, HiOutlinePaperAirplane, HiShare } from 'react-icons/hi'
 import { BASE_URL } from '@app/lib/constants';
  import { toast } from 'react-toastify';
+import { savePost } from '@app/data/save';
 
 const ShareCard = ({rootRef, post}) => {
     const isLoggedIn = useApp((state) => state.isLoggedIn)
     const [isSaved, setIsSaved] = useState(false)
     const [isCopied, setIsCopied] = useState(false)
+    const user = useApp((state) => state.user)
     const copied = () => {
         setIsCopied(true);
         toast.success('Copied link to your clipboard to share', {
@@ -27,6 +29,11 @@ const ShareCard = ({rootRef, post}) => {
             icon: false
         });
     }
+
+    const saveIt = async(post, user) => {
+        const response = await savePost(post, user);
+    }
+
     return (
         <div className='flex sticky flex-row justify-between items-center border-b border-gray-50 pb-4 mb-4'>
             <div className='flex flex-row justify-center'>
@@ -53,7 +60,7 @@ const ShareCard = ({rootRef, post}) => {
                 {isLoggedIn ?
                     (isSaved) ?
                         <button className='bg-[#5634ee] hover:bg-black text-white duration-75 delay-75 rounded-full px-4 py-1'>Saved</button> :
-                        <button className='bg-[#ec05ad] hover:bg-black text-white duration-75 delay-75 rounded-full px-4 py-1'>Save</button>
+                        <button onClick={() => saveIt(post.PostHashHex, user.data)} className='bg-[#ec05ad] hover:bg-black text-white duration-75 delay-75 rounded-full px-4 py-1'>Save</button>
                     :
                     <button className='bg-[#ec05ad] text-white hover:bg-black duration-75 delay-75 rounded-full px-4 py-1'>Save</button>
                 }

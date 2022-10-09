@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.3",
     "@tanstack/react-query": "^4.10.1",
     "@tanstack/react-query-devtools": "^4.10.1",
     "animate.css": "^4.1.1",
@@ -19,6 +20,10 @@
     "framer-motion": "^7.5.3",
     "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.1",
+    "linkify-plugin-hashtag": "^4.0.2",
+    "linkify-plugin-mention": "^4.0.2",
+    "linkify-react": "^4.0.2",
+    "linkifyjs": "^4.0.2",
     "nanoid": "^4.0.0",
     "next": "12.3.1",
     "next-seo": "^5.5.0",
@@ -33,7 +38,6 @@
     "react-icons": "^4.4.0",
     "react-image-size": "^1.0.5",
     "react-lazy-load-image-component": "^1.5.5",
-    "react-loader-spinner": "^5.3.4",
     "react-toastify": "^9.0.8",
     "sass": "^1.55.0",
     "sharp": "^0.31.1",

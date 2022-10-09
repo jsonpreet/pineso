@@ -1,13 +1,14 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
-const UserImage = ({ username, publickey, classes }) => {
+const UserImage = ({ username, profile, classes }) => {
+    console.log(profile)
     return (
         <>
             <LazyLoadImage
                 className={`rounded-full ${classes}`}
                 alt={`${username}'s profile picture`}
                 effect="blur"
-                src={`https://node.deso.org/api/v0/get-single-profile-picture/${publickey}`}
+                src={profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${profile?.PublicKeyBase58Check}`}
             />
         </>
     )

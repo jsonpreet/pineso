@@ -17,6 +17,7 @@ import Linkify from "linkify-react";
 import "linkify-plugin-hashtag";
 import "linkify-plugin-mention";
 import Link from 'next/link';
+import { LinkifyOptions } from "@app/lib/utils";
 
 const Single = () => {
     const router = useRouter();
@@ -62,20 +63,6 @@ const Single = () => {
     // if (isFetching) {
     //     return ( <FetchingLoader /> )
     // }
-    
-    const renderLink = ({ attributes, content }) => {
-        const { href, ...props } = attributes;
-        return <Link href={href} passHref><a className='text-[#5634ee] duration-75 delay-75 hover:text-[#ec05ad]' {...props}>{content}</a></Link>;
-    };
-
-    const options = {
-        formatHref: {
-            hashtag: (href) => "/hashtag/" + href.substr(1).toLowerCase(),
-            mention: (href) => "/" + href.substr(1).toLowerCase(),
-        },
-        render: renderLink,
-        nl2br: true
-    };
 
     const Output = () => {
         return (
@@ -97,9 +84,9 @@ const Single = () => {
                                 </div>
                                 <div className='content flex flex-col w-2/4 pt-8 pb-4 px-8'>
                                     <ShareCard rootRef={rootRef} post={post} />
-                                    <UserCard user={user.profile} post={post.ProfileEntryResponse} follows={follows} isFollowing={isFollowing} />
+                                    <UserCard user={user.profile} profile={post.ProfileEntryResponse} follows={follows} isFollowing={isFollowing} />
                                     <div className='mt-4 break-words body'>
-                                        <Linkify options={options}>
+                                        <Linkify options={LinkifyOptions}>
                                             {post.Body}
                                         </Linkify>
                                     </div>

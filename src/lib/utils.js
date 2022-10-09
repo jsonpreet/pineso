@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import reactImageSize from 'react-image-size'
+import "linkify-plugin-hashtag";
+import "linkify-plugin-mention";
 
 export function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -64,3 +66,23 @@ export const calculateDurationUntilNow = (p_timeStampNanoSeconds) => {
 export function get_url_extension( url ) {
     return url.split(/[#?]/)[0].split('.').pop().trim();
 }
+
+export const LinkifyRenderLink = ({ attributes, content }) => {
+    const { href, ...props } = attributes;
+    return <Link href={href} passHref><a className='text-[#5634ee] duration-75 delay-75 hover:text-[#ec05ad]' {...props}>{content}</a></Link>;
+};
+
+export const LinkifyOptions = {
+    formatHref: {
+        hashtag: (href) => "/hashtag/" + href.substr(1).toLowerCase(),
+        mention: (href) => "/" + href.substr(1).toLowerCase(),
+    },
+    render: {
+        mention: LinkifyRenderLink,
+        hashtag: LinkifyRenderLink,
+        url: ({ attributes, content }) => {
+            return <a {...attributes} className='text-[#5634ee] duration-75 delay-75 hover:text-[#ec05ad]' target="_blank">{content}</a>
+        },
+    },
+    nl2br: true
+};

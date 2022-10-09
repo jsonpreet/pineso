@@ -30,8 +30,22 @@ const ShareCard = ({rootRef, post}) => {
         });
     }
 
-    const saveIt = async(post, user) => {
-        const response = await savePost(post, user);
+    const saveIt = async (post, user) => {
+        console.log('save it')
+        toast.warning('Save is no enabled!', {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            pauseOnFocusLoss: false,
+            draggable: false,
+            closeButton: false,
+            progress: undefined,
+            theme: "dark",
+            icon: false
+        });
+        //const response = await savePost(post, user);
     }
 
     return (
@@ -59,10 +73,10 @@ const ShareCard = ({rootRef, post}) => {
                 {post.IsNFT && <span className="bg-[#5634ee] text-white px-4 py-1 rounded-full shadow mr-2">NFT</span>}
                 {isLoggedIn ?
                     (isSaved) ?
-                        <button className='bg-[#5634ee] hover:bg-black text-white duration-75 delay-75 rounded-full px-4 py-1'>Saved</button> :
+                        <button onClick={() => saveIt(post.PostHashHex, user.data)} className='bg-[#5634ee] hover:bg-black text-white duration-75 delay-75 rounded-full px-4 py-1'>Saved</button> :
                         <button onClick={() => saveIt(post.PostHashHex, user.data)} className='bg-[#ec05ad] hover:bg-black text-white duration-75 delay-75 rounded-full px-4 py-1'>Save</button>
                     :
-                    <button className='bg-[#ec05ad] text-white hover:bg-black duration-75 delay-75 rounded-full px-4 py-1'>Save</button>
+                    <button onClick={() => saveIt(post.PostHashHex, user.data)} className='bg-[#ec05ad] text-white hover:bg-black duration-75 delay-75 rounded-full px-4 py-1'>Save</button>
                 }
             </div>
         </div>

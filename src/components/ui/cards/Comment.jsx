@@ -2,6 +2,10 @@ import Link from "next/link"
 import { HiCheckCircle } from "react-icons/hi"
 import UserImage from "@components/ui/UserImage"
 import { CommentMeta } from "@components/ui/cards"
+import Linkify from "linkify-react";
+import "linkify-plugin-hashtag";
+import "linkify-plugin-mention";
+import { LinkifyOptions } from "@app/lib/utils";
 
 
 const CommentCard = ({ isSub, comment, profile}) => {
@@ -10,7 +14,7 @@ const CommentCard = ({ isSub, comment, profile}) => {
         <div className={`flex my-4 flex-col ${isSub ? `sub-comment` : ''}`}>
             <div className='flex flex-row'>
                 <div className='image bg-gray-300 shadow rounded-full w-[40px] h-[40px]'>
-                    <UserImage classes='w-[40px] shadow h-[40px]' publickey={profile.PublicKeyBase58Check} />
+                    <UserImage classes='w-[40px] shadow h-[40px]' username={profile?.Username} profile={profile} />
                 </div>
                 <div className='flex flex-col ml-2 items-start flex-1'>
                     <div className='flex flex-row items-center justify-center'>
@@ -24,7 +28,11 @@ const CommentCard = ({ isSub, comment, profile}) => {
                         </Link>
                     </div>
                     <div className='block'>
-                        <span className='text-black break-all whitespace-pre-wrap'>{comment.Body}</span>
+                        <span className='text-black break-all whitespace-pre-wrap'>
+                            <Linkify options={LinkifyOptions}>
+                                {comment.Body}
+                            </Linkify>
+                        </span>
                     </div>
                     <CommentMeta post={comment} />
                 </div>

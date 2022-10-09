@@ -7,6 +7,7 @@ import useApp from "@app/stores/store";
 import { useRouter } from "next/router";
 import { Menu, Transition, Switch } from '@headlessui/react'
 import { IoChevronDownCircleOutline } from "react-icons/io5";
+import { BsFileArrowDown } from "react-icons/bs";
 import { classNames } from "@app/lib/utils";
 import UserImage from "@components/ui/UserImage";
 import { getSingleProfile } from "@app/data/single-profile";
@@ -116,7 +117,7 @@ const Header = () => {
                             <div className="flex items-center justify-center mr-2">
                                 <Link href={`/${user?.profile?.Username}`} passHref>
                                     <a>
-                                        <UserImage username={user?.profile?.Username} publickey={user?.profile?.PublicKeyBase58Check} classes={'w-8 h-8 rounded-full'} />
+                                        <UserImage username={user?.profile?.Username} profile={user?.profile} classes={'w-10 h-10 shadow-xl border border-gray-200 rounded-full'} />
                                     </a>
                                 </Link>
                             </div>
@@ -125,7 +126,7 @@ const Header = () => {
                             <Menu as="div" className="relative inline-block text-left">
                                 <div>
                                     <Menu.Button className="inline-flex w-full justify-center hover:bg-gray-200 p-2 rounded-full duration-75 delay-75 items-center shadow-none text-sm font-medium text-gray-700 focus:outline-none">
-                                        <IoChevronDownCircleOutline className="h-5 w-5" aria-hidden="true" />
+                                        <BsFileArrowDown className="h-6 w-6" aria-hidden="true" />
                                     </Menu.Button>
                                 </div>
 

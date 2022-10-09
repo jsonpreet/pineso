@@ -8,6 +8,9 @@ import { BsPatchCheckFill } from "react-icons/bs";
 const UserCard = ({ follows, profile, user, isFollowing }) => {
     const isLoggedIn = useApp((state) => state.isLoggedIn)
 
+    const profileID = profile?.PublicKeyBase58Check;
+    const userID = user?.PublicKeyBase58Check;
+
     const onFollow = () => {
         
         toast.warning('Follow is no enabled!', {
@@ -35,7 +38,7 @@ const UserCard = ({ follows, profile, user, isFollowing }) => {
                     <div>
                         <Link href={`/${profile.Username}`}>
                             <a className='flex flex-row justify-center items-center'>
-                                <span className="mr-1 text-black font-semibold leading-none">{profile.Username}</span>
+                                <span className="mr-1 text-black font-semibold duration-75 delay-75 hover:text-[#ec05ad] leading-none">{profile.Username}</span>
                                 {profile.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
                             </a>
                         </Link>
@@ -46,12 +49,12 @@ const UserCard = ({ follows, profile, user, isFollowing }) => {
                 </div>
             </div>
             <div className='follow -mt-2'>
-                {isLoggedIn ?
+                {(isLoggedIn && userID !== profileID) ?
                     (isFollowing) ?
                         <button onClick={() => onFollow()} className='bg-[#ec05ad] hover:bg-[#5634ee] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button> :
                         <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-gray-300 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
                     :
-                    <button onClick={() => onFollow()} className='hover:bg-[#ec05ad] hover:text-white bg-gray-300 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
+                    (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#ec05ad] hover:text-white bg-gray-300 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
                 }
             </div>
         </div>

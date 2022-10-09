@@ -1,12 +1,20 @@
-import Head from 'next/head'
-import LatestPage from '@app/components/LatestPage'
-import { Layout } from '@app/components/layout'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+
+import { Layout } from '@app/components/layout';
+import { LoadingLoader } from '@app/components/loader';
+
+const LatestPage = dynamic(() => import('@app/components/pages/Latest'), {
+  suspense: true,
+})
 
 const Latest = () => {
   return (
     <>
       <Layout>
-        <LatestPage/>
+        <Suspense fallback={<LoadingLoader/>}>
+          <LatestPage />
+        </Suspense>
       </Layout>
     </>
   )

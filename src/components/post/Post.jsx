@@ -18,11 +18,11 @@ const Post = ({post, scrollPosition}) => {
             <motion.div
                 ref={pinRef}
                 className={`bg-white rounded-xl mb-4 overflow-hidden relative flex flex-col items-center justify-center ${loading ? `h-[300px]` : ``} `}
-                initial={{ y: 100 }}
+                initial={{ y: 120 }}
                 animate={{ y: 0 }}
                 transition={{
                     default: {
-                        duration: 0.4,
+                        duration: 0.6,
                         ease: [0, 0.71, 0.2, 1.01]
                     },
                 }}
@@ -34,6 +34,7 @@ const Post = ({post, scrollPosition}) => {
                             effect="blur"
                             beforeLoad={() => setLoading(true)}
                             afterLoad={() => setLoading(false)}
+                            placeholderSrc='https://placekeanu.com/300/550/yg'
                             src={post.ImageURLs[0]}
                             className='rounded-xl border border-gray-100'
                         />

@@ -17,9 +17,9 @@ const TagPage = () => {
     if (isLoading) {
         return ( <LoadingLoader/> )
     }
-    // if (isFetching) {
-    //     return ( <FetchingLoader /> )
-    // }
+    if (isFetching) {
+        return ( <FetchingLoader /> )
+    }
     if (isFetched) {
         return (
             <>

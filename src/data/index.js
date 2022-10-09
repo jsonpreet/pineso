@@ -7,8 +7,9 @@ export { getLatestFeed, FetchLatestFeed } from './latest-feed';
 export { getGlobalFeed, FetchGlobalFeed } from './global-feed';
 export { getSingleProfile, getSingleProfilebyUsername, FetchSingleProfilebyUsername } from './single-profile';
 export { getExchangeRate, FetchExchangeRate } from './exchange';
-export { getFollows, getFollowings, FetchFollows, FetchFollowings, getIsFollowing, FetchIsFollowing } from './user';
+export { getUserFeed, getFollows, getFollowings, getIsFollowing, FetchFollows, FetchFollowings, FetchIsFollowing, FetchUserFeed } from './user';
 export { getHotFeed, FetchHotFeed } from './hot-feed'
+
 
 
 

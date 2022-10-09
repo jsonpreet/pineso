@@ -6,8 +6,10 @@ export const BASE_URL = 'https://pineso.io';
 export const config = {
     defaultOptions: {
         queries: {
-            staleTime: 120 * 1000,
-            refetchOnWindowFocus: true,
+            staleTime: 60 * 5 * 1000,
+            cacheTime: 120 * 5 * 1000,
+            refetchOnWindowFocus: false,
+            refetchInterval: 60 * 5 * 1000,
         }
     }
 }

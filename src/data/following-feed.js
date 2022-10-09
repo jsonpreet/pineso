@@ -6,16 +6,17 @@ import axios from "axios";
 export const getFollowingFeed = async ({queryKey}) => {
     const [_key, { publicKey }] = queryKey
     const pins = [];
-    const endpoint = 'get-posts-for-public-key';
+    const endpoint = 'get-posts-stateless';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        PublicKeyBase58Check: publicKey,
+        ReaderPublicKeyBase58Check: publicKey,
         NumToFetch: 150,
         MediaRequired: true,
+        GetPostsForFollowFeed: true,
     });
     if (response === null) {
         return null
     } else {
-        const posts = response.data.Posts;
+        const posts = response.data.PostsFound;
         const filtered = posts.filter(post => {
             return post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
         });

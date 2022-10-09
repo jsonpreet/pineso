@@ -1,6 +1,5 @@
 import { EXTERNAL_LINK } from "@app/lib/constants";
 import { calculateDurationUntilNow } from "@app/lib/utils";
-import Link from "next/link";
 import { HiChatAlt2, HiExternalLink, HiHeart, HiOutlineChatAlt2, HiOutlineHeart, HiRefresh } from "react-icons/hi"
 import { IoDiamondOutline } from "react-icons/io5";
 

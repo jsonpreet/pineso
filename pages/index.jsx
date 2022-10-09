@@ -1,14 +1,20 @@
-import { Layout } from '@app/components/layout'
-import useApp from '@app/stores/store'
-import HotPage from '@app/components/HotPage'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+
+import { Layout } from '@app/components/layout';
+import { LoadingLoader } from '@app/components/loader';
+
+const HotPage = dynamic(() => import('@app/components/pages/Hot'), {
+  suspense: true,
+})
 
 const Home = () => {
-  const user = useApp((state) => state.user)
-  const isLoggedIn = useApp((state) => state.isLoggedIn)
   return (
     <>
       <Layout>
-        <HotPage/>
+        <Suspense fallback={<LoadingLoader/>}>
+          <HotPage />
+        </Suspense>
       </Layout>
     </>
   )

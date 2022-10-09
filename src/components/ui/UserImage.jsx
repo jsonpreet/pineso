@@ -1,7 +1,6 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 const UserImage = ({ username, profile, classes }) => {
-    console.log(profile)
     return (
         <>
             <LazyLoadImage

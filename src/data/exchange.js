@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const getExchangeRate = async () => {
     const endpoint = 'get-exchange-rate';
-    const response = await axios.post(`${BASE_URI}/${endpoint}`);
+    const response = await axios.get(`${BASE_URI}/${endpoint}`);
     if (response === null) {
         return null
     } else {

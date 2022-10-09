@@ -1,12 +1,22 @@
 
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+
 import { Layout } from '@app/components/layout';
-import TagPage from '@app/components/TagPage';
+import { LoadingLoader } from '@app/components/loader';
+
+const TagPage = dynamic(() => import('@app/components/pages/Tag'), {
+  suspense: true,
+})
+// import { TagPage } from '@app/components/pages';
 
 const Tag = () => {
     return (
         <>
             <Layout>
-                <TagPage/>
+                <Suspense fallback={<LoadingLoader/>}>
+                    <TagPage />
+                </Suspense>
             </Layout>
         </>
     )

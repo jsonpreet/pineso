@@ -21,9 +21,7 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider enableSystem={true} attribute="class">
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <Suspense fallback={<div>Loading...</div>}> 
-              <Component {...pageProps} />
-            </Suspense>
+            <Component {...pageProps} />
             <Devtools />
           </Hydrate>
         </QueryClientProvider>

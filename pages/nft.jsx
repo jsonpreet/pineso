@@ -1,12 +1,20 @@
-import Head from 'next/head'
-import NFTPage from '@app/components/NFTPage'
-import { Layout } from '@app/components/layout'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+
+import { Layout } from '@app/components/layout';
+import { LoadingLoader } from '@app/components/loader';
+
+const NFTPage = dynamic(() => import('@app/components/pages/NFT'), {
+  suspense: true,
+})
 
 const NFT = () => {
   return (
     <>
       <Layout>
-        <NFTPage/>
+        <Suspense fallback={<LoadingLoader/>}>
+          <NFTPage />
+        </Suspense>
       </Layout>
     </>
   )

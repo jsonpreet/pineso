@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getLatestFeed, FetchLatestFeed } from '@data/latest-feed'
+import { getLatestFeed, FetchLatestFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
@@ -43,7 +43,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['latestfeed'], getLatestFeed({ limit: 200 }));
+        await queryClient.prefetchQuery(['latest-feed'], getLatestFeed({ limit: 200 }));
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

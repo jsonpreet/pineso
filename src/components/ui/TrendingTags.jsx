@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getTrendingTags, FetchTrendingTags } from '@data/trending-tags'
+import { getTrendingTags, FetchTrendingTags } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { Loader, ErrorLoader } from '@components/loader'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ const TrendingTags = ({ isSingle }) => {
     if (isFetched) {
         return (
             <>
-                <div className={`flex flex-row items-center justify-center mt-2 ${!isSingle ? `animate-background bg-[length:150%_100%] bg-gradient-to-r from-[#ec05ad] via-[#ff0071] to-[#5634ee]` : ''} p-2 mb-4 w-full`}>
+                <div className={`flex flex-row items-center justify-center ${!isSingle ? `animate-background bg-[length:150%_100%] bg-gradient-to-r from-[#ec05ad] via-[#ff0071] to-[#5634ee]` : ''} p-2 mb-4 w-full`}>
                     {tags?.length > 0 && tags.map((tag, index) => {
                         const link = tag.Hashtag.replace(/(#(?:[^\x00-\x7F]|\w)+)/g, (hashtags) => {
                             return hashtags.substring(1).toLowerCase()

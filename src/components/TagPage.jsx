@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { FetchSingleTagFeed, getSingleTagFeed } from '@app/data/single-tag';
+import { FetchSingleTagFeed, getSingleTagFeed } from '@app/data';
 import { withCSR } from '@lib/utils'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'

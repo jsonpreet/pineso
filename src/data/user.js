@@ -32,8 +32,26 @@ export const getFollows = async ({ queryKey }) => {
     }
 }
 
+export const getFollowings = async ({ queryKey }) => {
+    const [_key, { publicKey }] = queryKey;
+    const endpoint = 'get-follows-stateless';
+    const response = await axios.post(`${BASE_URI}/${endpoint}`, {
+        PublicKeyBase58Check: publicKey,
+        GetEntriesFollowingUsername: false
+    });
+    if (response === null) {
+        return null
+    } else {
+        return response.data.NumFollowers
+    }
+}
+
 export const FetchFollows = ({publicKey}) => {
-    return useQuery([['follows', publicKey], { publicKey }], getFollows);
+    return useQuery([['total-follows', publicKey], { publicKey }], getFollows);
+}
+
+export const FetchFollowings = ({publicKey}) => {
+    return useQuery([['total-followings', publicKey], { publicKey }], getFollowings);
 }
 
 export const FetchIsFollowing = ({publicKey, followingKey}) => {

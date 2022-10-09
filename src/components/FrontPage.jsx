@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getFollowingFeed, FetchFollowingFeed } from '@data/following-feed'
+import { getFollowingFeed, FetchFollowingFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { config } from '@app/lib/constants'
 import { Post } from '@components/post'

@@ -1,10 +1,9 @@
-import { FetchIsFollowing } from "@app/data/user";
 import { nFormatter } from "@app/lib/utils";
 import useApp from "@app/stores/store";
 import Link from "next/link";
-import { HiCheckCircle } from "react-icons/hi";
 import UserImage from "@components/ui/UserImage";
 import { toast } from "react-toastify";
+import { BsPatchCheckFill } from "react-icons/bs";
 
 const UserCard = ({ follows, profile, user, isFollowing }) => {
     const isLoggedIn = useApp((state) => state.isLoggedIn)
@@ -37,7 +36,7 @@ const UserCard = ({ follows, profile, user, isFollowing }) => {
                         <Link href={`/${profile.Username}`}>
                             <a className='flex flex-row justify-center items-center'>
                                 <span className="mr-1 text-black font-semibold leading-none">{profile.Username}</span>
-                                {profile.IsVerified && <span><HiCheckCircle className="text-[#ec05ad]" size={16} /></span>}
+                                {profile.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
                             </a>
                         </Link>
                     </div>

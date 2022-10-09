@@ -1,4 +1,4 @@
-import { FetchLatestFeed } from '@data/latest-feed'
+import { FetchLatestFeed } from '@app/data'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
 

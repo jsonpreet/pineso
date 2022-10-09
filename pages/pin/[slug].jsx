@@ -2,12 +2,11 @@ import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
 import { withCSR } from '@lib/utils'
 import reactImageSize from 'react-image-size'
-import { FetchSinglePost, getSinglePost } from '@app/data/single-post';
+import { FetchSinglePost, getSinglePost, getFollows, getIsFollowing } from '@app/data';
 import { ErrorLoader, FetchingLoader, LoadingLoader } from '@app/components/loader';
 import { Layout } from '@app/components/layout';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { UserCard, ShareCard, MetaCard } from '@app/components/ui/cards';
-import { getFollows, getIsFollowing } from '@app/data/user';
 import useApp from '@app/stores/store';
 import { useEffect, useRef, useState } from 'react';
 import { Comments } from '@app/components/post';
@@ -16,7 +15,6 @@ import TrendingTags from '@app/components/ui/TrendingTags';
 import Linkify from "linkify-react";
 import "linkify-plugin-hashtag";
 import "linkify-plugin-mention";
-import Link from 'next/link';
 import { LinkifyOptions } from "@app/lib/utils";
 
 const Single = () => {

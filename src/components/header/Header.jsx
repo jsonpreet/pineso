@@ -10,7 +10,7 @@ import { IoChevronDownCircleOutline } from "react-icons/io5";
 import { BsFileArrowDown } from "react-icons/bs";
 import { classNames } from "@app/lib/utils";
 import UserImage from "@components/ui/UserImage";
-import { getSingleProfile } from "@app/data/single-profile";
+import { getSingleProfile } from "@app/data";
 
 const Header = () => {
     const router = useRouter()

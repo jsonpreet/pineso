@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getNFTFeed, FetchNFTFeed } from '@data/nft-feed'
+import { getNFTFeed, FetchNFTFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'

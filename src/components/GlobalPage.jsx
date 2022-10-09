@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getGlobalFeed, FetchGlobalFeed } from '@data/global-feed'
+import { getGlobalFeed, FetchGlobalFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { config } from '@app/lib/constants'
 import { Post } from '@components/post'

@@ -13,11 +13,20 @@ body {
     text-align: center!important;
 }
 
-.imageBG{
+.imageBG, .profileBG{
     background-image: url('/dotted.svg');
     background-size: 15%;
-    opacity:.35;
+    opacity:.15;
     object-fit: cover;
     inset: 0;
     position: absolute;
+}
+
+.profileBG{
+    background-size: 5%;
+    &.has-cover{
+        background-size: cover;
+        background-position: center;
+        opacity: 1;
+    }
 }

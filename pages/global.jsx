@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import GlobalPage from '@app/components/GlobalPage'
 import { Layout } from '@app/components/layout'
 

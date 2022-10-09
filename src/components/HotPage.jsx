@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getHotFeed, FetchHotFeed } from '@data/hot-feed'
+import { getHotFeed, FetchHotFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { config } from '@app/lib/constants'
 import { Post } from '@components/post'

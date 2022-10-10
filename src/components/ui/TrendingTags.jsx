@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { getTrendingTags, FetchTrendingTags } from '@app/data'
+import { getTrendingTagsWithFeed, FetchTrendingTagsWithFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { Loader, ErrorLoader } from '@components/loader'
 import Link from 'next/link'
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 const TrendingTags = ({ isSingle }) => {
     const router = useRouter();
-    const { data: tags, isLoading, isFetching, isFetched, error, isError } = FetchTrendingTags()
+    const { data: feed, isLoading, isFetching, isFetched, error, isError } = FetchTrendingTagsWithFeed()
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
     }
@@ -15,25 +15,24 @@ const TrendingTags = ({ isSingle }) => {
     const currentTag = isTagPage ? router.query.slug : null
     if (isFetched) {
         return (
-            <>
-                <div className={`flex flex-row items-center justify-center ${!isSingle ? `animate-background bg-[length:150%_100%] bg-gradient-to-r from-[#ec05ad] via-[#ff0071] to-[#5634ee]` : ''} p-2 mb-4 w-full`}>
-                    {tags?.length > 0 && tags.map((tag, index) => {
-                        const link = tag.Hashtag.replace(/(#(?:[^\x00-\x7F]|\w)+)/g, (hashtags) => {
+            <div className='max-w-[1100px] mx-auto'>
+                <div className={`grid grid-cols-5 gap-5 p-2 mb-4 w-full`}>
+                    {feed?.length > 0 && feed.map((post, index) => {
+                        const link = post.tag.Hashtag.replace(/(#(?:[^\x00-\x7F]|\w)+)/g, (hashtags) => {
                             return hashtags.substring(1).toLowerCase()
                         })
+                        const bgImage = post.ImageURLs[0]
                         return (
                             <Link href={`/hashtag/${link}`} key={index}>
-                                <a className={`py-2 text-sm px-4  mr-2 rounded-full duration-75 delay-75 
-                                    ${!isSingle ? isTagPage && currentTag === link ? `text-white bg-black hover:bg-[#5634ee]` : `hover:bg-black hover:text-white text-black bg-white`
-                                        :
-                                        'bg-black text-white hover:bg-[#5634ee]'} font-semibold shadow-xl`}>
-                                    {tag.Hashtag}
+                                <a style={{ backgroundImage: `url(${bgImage})`}} className={`bg-cover bg-no-repeat bg-center group relative flex flex-col items-center justify-center w-50 h-24 text-sm px-4 rounded-xl duration-75 delay-75 bg-black text-white hover:bg-[#5634ee]'} font-semibold shadow-xl`}>
+                                    <span className='text-white font-semibold text-lg z-10 relative'>{post.tag.Hashtag}</span>
+                                    <div className='bg-black/40 group-hover:bg-black/50 absolute rounded-xl left-0 right-0 w-full h-full duration-75 delay-75'></div>
                                 </a>
                             </Link>
                         )
                     })}
                 </div>
-            </>
+            </div>
         )
     }
 }
@@ -46,7 +45,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['trending-tags'], getTrendingTags);
+        await queryClient.prefetchQuery(['trending-tags-feed'], getTrendingTagsWithFeed);
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

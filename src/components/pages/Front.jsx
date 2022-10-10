@@ -1,15 +1,14 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { getFollowingFeed, FetchFollowingFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
-import { config } from '@app/lib/constants'
 import { Post } from '@components/post'
-import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
+import { LoadingLoader, ErrorLoader } from '@components/loader'
 import useApp from '@app/stores/store'
 
 const FrontPage = () => {
     const user = useApp((state) => state.user)
     const isLoggedIn = useApp((state) => state.isLoggedIn)
-    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchFollowingFeed(user.publicKeyBase58Check)
+    const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchFollowingFeed(user.profile.PublicKeyBase58Check)
     
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
@@ -38,14 +37,14 @@ export default FrontPage
 export const getServerSideProps = withCSR(async (ctx) => {
     
     const user = useApp((state) => state.user)
-    const publicKey = user.publicKeyBase58Check;
+    const publicKey = user.profile.PublicKeyBase58Check;
+    
     let page = 1;
     if (ctx.query.page) {
         page = parseInt(ctx.query.page);
     }
 
     const queryClient = new QueryClient();
-
     let isError = false;
 
     try {
@@ -56,7 +55,6 @@ export const getServerSideProps = withCSR(async (ctx) => {
     }
     return {
         props: {
-            //also passing down isError state to show a custom error component.
             isError,
             dehydratedState: dehydrate(queryClient),
         },

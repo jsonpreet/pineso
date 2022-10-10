@@ -9,9 +9,9 @@ const Layout = ({ children }) => {
         <div className='flex flex-col justify-center'>
             <Header/>
             <div className='container-fluid py-[70px]'>
-                <div className='trending-tags mx-auto'>
+                {/* <div className='trending-tags mx-auto'>
                     {router.pathname !== '/pin/[slug]' && <TrendingTags isSingle={false} />}
-                </div>
+                </div> */}
                 <div className='content px-4 pt-2'>{children}</div>          
             </div>
             <ToastContainer/>

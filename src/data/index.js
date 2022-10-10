@@ -1,4 +1,4 @@
-export { getTrendingTags,  FetchTrendingTags } from './trending-tags';
+export { getTrendingTags, getTrendingTagsWithFeed,  FetchTrendingTags, FetchTrendingTagsWithFeed } from './trending-tags';
 export { getSingleTagFeed, FetchSingleTagFeed } from './single-tag';
 export { getSinglePost, FetchSinglePost } from './single-post';
 export { getFollowingFeed, FetchFollowingFeed } from './following-feed';

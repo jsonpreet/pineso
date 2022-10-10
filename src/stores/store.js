@@ -5,10 +5,16 @@ const useApp = create(
     persist(
         (set, get) => ({
             user: {},
+            recentSearch: [],
             isLoggedIn: false,
             setUser: (params) => {
                 set((state) => ({
                     user: params,
+                }));
+            },
+            setSearch: (params) => {
+                set((prev) => ({
+                    recentSearch: [...prev.recentSearch, params],
                 }));
             },
             setLoggedIn: (params) => {
@@ -16,6 +22,11 @@ const useApp = create(
                     isLoggedIn: params,
                 }));
             },
+            resetSearch: () => {
+                set((state) => ({
+                    recentSearch: [],
+                }));
+            }
         }),
         { name: 'pineso' }
     )

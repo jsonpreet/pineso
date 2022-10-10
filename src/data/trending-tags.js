@@ -1,6 +1,6 @@
 import { BASE_URI, SUPPORTED_FORMATS } from "@app/lib/constants";
 import { getImageSize, get_url_extension } from "@app/lib/utils";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const getSingleTagFeed = async (tag) => {
@@ -109,7 +109,14 @@ export const getTrendingTagsWithFeed = async () => {
 }
 
 export const FetchTrendingTagsWithFeed = () => {
-    return useQuery(['trending-tags-feed'], getTrendingTagsWithFeed);
+    const queryClient = new QueryClient();
+    return useQuery(['trending-tags-feed'], getTrendingTagsWithFeed, {
+        placeholderData: () => {
+            return queryClient.getQueryData(['trending-tags-feed'])
+        },
+        cacheTime: Infinity,
+        keepPreviousData: true,
+    });
 }
 
 export const FetchTrendingTags = () => {

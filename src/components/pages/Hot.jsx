@@ -12,7 +12,7 @@ const HotPage = () => {
         return ( <ErrorLoader error={error}/>  )
     }
     if (isLoading) { 
-        return ( <LoadingLoader/> )
+        return ( <LoadingLoader message="Loading Hot Pins for you."/> )
     }
     // if (isFetching) {
     //     return ( <FetchingLoader /> )

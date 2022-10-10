@@ -18,7 +18,7 @@ const Post = ({post, scrollPosition}) => {
             <motion.div
                 ref={pinRef}
                 className={`bg-white rounded-xl mb-4 overflow-hidden relative flex flex-col items-center justify-center ${loading ? `h-[300px]` : ``} `}
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 0.4 }}
                 animate={{ opacity: 1 }}
                 transition={{
                     default: {

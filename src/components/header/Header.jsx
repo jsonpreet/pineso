@@ -6,16 +6,18 @@ import Deso from 'deso-protocol';
 import useApp from "@app/stores/store";
 import { useRouter } from "next/router";
 import { Menu, Transition, Switch } from '@headlessui/react'
-import { IoChevronDownCircleOutline } from "react-icons/io5";
-import { BsFileArrowDown } from "react-icons/bs";
-import { FaTimes } from "react-icons/fa";
-import { classNames, withCSR } from "@app/lib/utils";
+import { IoChevronDownCircleOutline, IoDiamondOutline } from "react-icons/io5";
+import { BsArrowRightShort, BsFileArrowDown, BsPatchCheckFill, BsPatchQuestionFill, BsQuestion } from "react-icons/bs";
+import { FaTimes, FaTwitter } from "react-icons/fa";
+import { classNames, removeDuplicates, withCSR } from "@app/lib/utils";
 import UserImage from "@components/ui/UserImage";
-import { FetchTrendingTagsWithFeed, getSearch, getSingleProfile, getTrendingTagsWithFeed } from "@app/data";
+import { FetchExchangeRate, FetchTrendingTagsWithFeed, getSearch, getSingleProfile, getTrendingTagsWithFeed } from "@app/data";
 import { useDebounce } from "@lib/hooks";
 import { useQuery } from "@tanstack/react-query";
 import TrendingTags from "@components/ui/TrendingTags";
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { Loader } from "@components/loader";
+import Image from "next/image";
 
 const Header = () => {
     const router = useRouter()
@@ -31,26 +33,30 @@ const Header = () => {
     const [deso, setDeso] = useState();
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [query, setQuery] = useState("")
+    const [results, setResults] = useState("")
     const debouncedFilter = useDebounce(query, 1200);
     const [loader, setLoader] = useState(false)
     const [showResults, setShowResults] = useState(false)
-    const { data: feed, isLoading, isFetching, isFetched, error, isError } = FetchTrendingTagsWithFeed()
+    const { data: feed, isLoading: feedLoading } = FetchTrendingTagsWithFeed()
 
-    // const { data, isLoading, isSuccess, isFetched } = useQuery(
-    //     [['search', debouncedFilter], debouncedFilter],
-    //     () => getSearch(debouncedFilter),
-    //     { enabled:Boolean(debouncedFilter)}
-    // );
+    const { data: exchange } = FetchExchangeRate();
 
-    // useEffect(() => {
-    //     if (isFetched && data) {
-    //         setLoader(false);
-    //         setShowResults(true);
-    //     } else {
-    //         setLoader(true);
-    //         setShowResults(false);
-    //     }
-    // }, [isFetched, debouncedFilter, data]);
+    const { data: profiles, isLoading, isSuccess, isFetched } = useQuery(
+        [['search', debouncedFilter], debouncedFilter],
+        () => getSearch(debouncedFilter),
+        { enabled:Boolean(debouncedFilter)}
+    );
+
+    useEffect(() => {
+        if (isFetched && profiles) {
+            setLoader(false)
+            setShowResults(true);
+            setResults(profiles);
+        } else {
+            setShowResults(false);
+            setResults();
+        }
+    }, [isFetched, profiles]);
 
     useEffect(() => {
         const isdeso = new Deso();
@@ -63,6 +69,49 @@ const Header = () => {
         setAccount(user);
         setUserLoggedIn(isLoggedIn);
     }, [isLoggedIn])
+
+    useEffect(() => {
+        window.addEventListener('scroll', isSticky);
+        return () => {
+            window.removeEventListener('scroll', isSticky);
+        };
+    },[]); 
+
+    useEffect(() => {
+        if(router.query !== null && router.query.query !== undefined) {
+            setQuery(router.query.query)
+        }
+    }, [router]); 
+    
+    
+    useEffect(() => {
+        if (query.length > 0) {
+            if (recentSearches?.length > 0) {
+                recentSearches.filter((search) => {
+                    if (search !== query) {
+                        let s = removeDuplicates([...recentSearches, query])
+                        setSearch(s);
+                    }
+                })
+            } else {
+                setSearch([query]);
+            }
+        }
+    }, [debouncedFilter]);
+    
+    const onSearch = ((e) => {
+        if (e.target.value.length > 0) {
+            setLoader(true)
+            setShowResults(true);
+            setQuery(e.target.value);
+            setShowSuggestions(false);
+        } else {
+            setLoader(false)
+            setShowSuggestions(true);
+            setShowResults(false);
+            setQuery('');
+        }
+    });
 
     const login = async () => {
         const request = {
@@ -99,49 +148,16 @@ const Header = () => {
             }
         }
     }
-            
-    
-    useEffect(() => {
-        if (query.length > 0) {
-            if (recentSearches?.length > 0) {
-                recentSearches.filter((search) => {
-                    if (search !== query) {
-                        setSearch(debouncedFilter);
-                    }
-                })
-            } else {
-                setSearch(debouncedFilter);
-            }
-        }
-    }, [debouncedFilter]);
-    
-    const onSearch = useCallback((e) => {
-        if(e.target.value.length > 0){
-            setQuery(e.target.value);
-            setShowSuggestions(false)
-        } else {
-            setShowResults(false);
-            setQuery('');
-            setShowSuggestions(true);
-            setLoader(false);
-        }
-    });
 
     const closeSearch = () => {
         setShowSuggestions(false)
     }
+    const searchRef = useDetectClickOutside({ onTriggered: closeSearch, triggerKeys: ['Escape', 'x'], });
 
     const resetRecentSearch = () => {
         resetSearch();
         setShowSuggestions(true)
     }
-
-    useEffect(() => {
-        window.addEventListener('scroll', isSticky);
-        return () => {
-            window.removeEventListener('scroll', isSticky);
-        };
-    },[]); 
     /* Method that will fix header after a specific scrollable */
     const isSticky = (e) => {
         const header = document.querySelector('.header-section');
@@ -150,11 +166,21 @@ const Header = () => {
         scrollTop >= 70 ? header.classList.add('bg-opacity-50') : header.classList.remove('bg-opacity-50');
     };
 
-    const searchRef = useDetectClickOutside({ onTriggered: closeSearch, triggerKeys: ['Escape', 'x'], });
+    const isShowSuggestions = () => {
+        if (query.length > 0) {
+            setShowSuggestions(false)
+            setShowResults(true)
+        } else {
+            setShowSuggestions(true)
+            setShowResults(false)
+        }
+    }
+
+    const exchangeRate = exchange?.USDCentsPerDeSoExchangeRate / 100
     
     return (
         <>
-            {showSuggestions && (
+            {(showSuggestions || showResults) ? (
                 <>
                     <style jsx global>
                     {`
@@ -163,10 +189,11 @@ const Header = () => {
                         }
                     `}
                     </style>
-                    <div className="fixed left-0 top-0 w-full h-screen bg-black/70 z-10" />
+                    
                 </>
-            )}
-            <div className={`header-section fixed z-20 flex top-0 left-0 w-full flex-row h-[70px] box-border py-2 px-4 bg-white`}>
+            ) : null}
+            <div className={` ${(showSuggestions || showResults) ? `visible` : `hidden`} fixed left-0 top-0 w-full h-screen bg-black/70 z-10`} />
+            <div className={`header-section fixed z-30 flex top-0 left-0 w-full flex-row h-[70px] box-border py-2 px-4 bg-white`}>
                 <div>
                     <Link href="/" className="cursor-pointer">
                         <a><Logo/></a>
@@ -188,11 +215,52 @@ const Header = () => {
                 </div>
                 <div className="flex flex-col flex-1 mx-4 relative justify-center items-center" ref={searchRef}>
                     <div className="relative w-full flex flex-row">
-                        <input className="bg-gray-100 outline-0 w-full focus:shadow-none focus:ring-4 focus:ring-[#5634ee]/50 px-4 h-[50px] rounded-full" onChange={(e) => onSearch(e)} onClick={() => setShowSuggestions(true)} type="text" placeholder="Search" />
+                        <input
+                            className="bg-gray-100 outline-0 w-full focus:shadow-none focus:ring-4 focus:ring-[#5634ee]/50 px-4 h-[50px] rounded-full"
+                            onChange={(e) => onSearch(e)}
+                            onClick={() => isShowSuggestions()}
+                            onKeyPress={(e) => {
+                                if (e.key === "Enter") {
+                                    router.push('/search?query='+e.target.value)
+                                }
+                            }}
+                            value={query}
+                            type="text"
+                            placeholder="Search"
+                        />
                         <BiSearch className="absolute top-[15px] text-gray-500 right-4" size={24}/>
                     </div>
                     
-                    <div className="absolute top-[60px] w-full bg-white rounded-lg shadow-lg">
+                    <div className="absolute top-[60px] w-full bg-white rounded-br-xl rounded-bl-xl shadow-2xl">
+                        {loader && <div className="flex flex-row items-center py-8 justify-center"><Loader className={`h-7 w-7 text-[#ec05ad]`} /></div>}
+                        {showResults && (
+                            <div className="flex flex-col max-h-96 overflow-x-hidden overflow-y-scroll" >
+                                {results?.ProfilesFound?.length > 0 && results.ProfilesFound.map((search) => {
+
+                                    const userCoinPrice = (search?.CoinPriceDeSoNanos / 1000000000) * exchangeRate;
+                                    return (
+                                        <div key={search.PublicKeyBase58Check} className="flex flex-row items-center py-2">
+                                            <Link href={`/${search.Username}`}>
+                                                <a className='flex flex-row w-full items-start hover:bg-gray-100 py-2 px-4'>
+                                                    <div>
+                                                        <UserImage classes='w-10 shadow h-10' username={search.Username} profile={search} />
+                                                    </div>
+                                                    <div className="ml-2 flex flex-col flex-auto items-start">
+                                                        <div className="flex flex-row items-start">
+                                                            <span className="mr-1 text-black font-semibold duration-75 delay-75 hover:text-[#ec05ad] leading-none">{search.Username}</span>
+                                                            {search.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
+                                                        </div>
+                                                        <div className='flex flex-row items-start'>
+                                                            <span className='text-[#ec05ad] mr-2'>≈${userCoinPrice.toFixed(2)} USD</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </Link>
+                                        </div>
+                                    )
+                                })}
+                            </div> )
+                        }
                         {showSuggestions && ( 
                             <div className="flex flex-col">
                                 {(recentSearches?.length > 0) ? (
@@ -201,12 +269,12 @@ const Header = () => {
                                             <p className=" font-semibold">Recent Searches</p>
                                             <button className="cursor-pointer ml-3 hover:bg-black hover:text-white duration-75 delay-75 bg-gray-200 p-[6px] rounded-full" onClick={() => resetRecentSearch()}><FaTimes size={12}/></button>
                                         </div>
-                                        <div className="flex flex-row items-center pt-2 px-4">
+                                        <div className="flex flex-row w-full items-center pt-2 px-4">
                                             {
                                                 recentSearches.map((search, index) => {
                                                     return (
-                                                        <Link href={`/search?query=${search}`} key={search}>
-                                                            <a className="font-semibold bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">
+                                                        <Link href={`/search?query=${search}`} key={search} shallow={true}>
+                                                            <a onClick={() => setShowSuggestions(false)} className="font-semibold mr-2 bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">
                                                                 <span>{search}</span>
                                                             </a>
                                                         </Link>    
@@ -236,6 +304,7 @@ const Header = () => {
                                                     </Link>
                                                 )
                                             })}
+                                            {feedLoading && <Loader className={`h-7 w-7 text-[#ec05ad]`}/>}
                                         </div>
                                     </div>
                                 </div>
@@ -251,7 +320,14 @@ const Header = () => {
                                 <div className="flex items-center justify-center mr-2">
                                     <Link href={`/${user?.profile?.Username}`} passHref>
                                         <a>
-                                            <UserImage username={user?.profile?.Username} profile={user?.profile} classes={'w-10 h-10 shadow-xl border border-gray-200 rounded-full'} />
+                                            {/* <UserImage username={user?.profile?.Username} profile={user?.profile} classes={'w-10 h-10 shadow-xl border border-gray-200 '} /> */}
+                                            <Image
+                                                className={`rounded-full w-10 h-10 border border-gray-200`}
+                                                alt={`${user?.profile?.Username}'s profile picture`}
+                                                src={user?.profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${user?.profile?.PublicKeyBase58Check}`}
+                                                width={40}
+                                                height={40}
+                                            />
                                         </a>
                                     </Link>
                                 </div>
@@ -263,7 +339,6 @@ const Header = () => {
                                             <BsFileArrowDown className="h-6 w-6" aria-hidden="true" />
                                         </Menu.Button>
                                     </div>
-
                                     <Transition
                                         as={Fragment}
                                         enter="transition ease-out duration-100"
@@ -307,9 +382,58 @@ const Header = () => {
                                 </Menu>
                             </div>
                         </div>
-                        :
-                        <a onClick={() => login()} className="cursor-pointer px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Login</a>
-                    }                
+                        : <div className="flex flex-row items-center justify-end">
+                            <a onClick={() => login()} className="cursor-pointer px-4 py-2 text-md font-semibold hover:bg-black rounded-full hover:text-white duration-75 delay-75">Login</a>
+                        </div>    
+                    }            
+                    <div className="flex flex-row items-center justify-end">
+                        <Menu as="div" className="relative inline-block text-left">
+                            <div>
+                                <Menu.Button className="ml-2 flex w-full justify-center items-center shadow-none focus:outline-none">
+                                    <BsPatchQuestionFill className="hover:text-[#5634ee] delay-75 duration-75 text-[#ec05ad]" size={24} />
+                                </Menu.Button>
+                            </div>
+                            <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                            >
+                                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div className="py-1">
+                                        <Menu.Item disabled>
+                                            <span className="block px-4 py-2 text-sm">Follow</span>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <a href='https://twitter.com/pinesoio' target='_blank' className='flex flex-row items-center duration-75 delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                                <FaTwitter className='mr-1 text-[#1da1f2]' size={17} />
+                                                <span>Twitter</span>
+                                            </a>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <a href='https://diamondapp.com/u/Pineso' target='_blank' className='flex flex-row items-center duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                                <IoDiamondOutline className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
+                                                <span>Diamond</span>
+                                            </a>
+                                        </Menu.Item>
+                                    </div>
+                                    <div className="py-1">
+                                        <Menu.Item>
+                                            <Link href='/page/about'>
+                                                <a className="flex flex-row items-center duration-75 delay-75 hover:text-pink-600 hover:bg-gray-100 cursor-pointer px-4 py-2">
+                                                    <BsArrowRightShort className="mr-2" size={20} />
+                                                    <span>About</span>
+                                                </a>
+                                            </Link>
+                                        </Menu.Item>
+                                    </div>
+                                </Menu.Items>
+                            </Transition>
+                        </Menu>
+                    </div>    
                 </div>
             </div>
         </>

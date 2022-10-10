@@ -9,7 +9,7 @@ export { getSingleProfile, getSingleProfilebyUsername, FetchSingleProfilebyUsern
 export { getExchangeRate, FetchExchangeRate } from './exchange';
 export { getUserFeed, getFollows, getFollowings, getIsFollowing, FetchFollows, FetchFollowings, FetchIsFollowing, FetchUserFeed } from './user';
 export { getHotFeed, FetchHotFeed } from './hot-feed'
-export { getSearch } from './search';
+export { getSearch, FetchSearch, getSearchPage } from './search';
 
 
 

@@ -27,8 +27,8 @@ const ProfilePage = () => {
     const { data: profile, isLoading, isFetching, isFetched, error, isError } = FetchSingleProfilebyUsername({ username: username });
     const { data: exchange } = FetchExchangeRate();
 
-    const profileID = profile?.PublicKeyBase58Check;
-    const userID = user?.profile?.PublicKeyBase58Check;
+    const profileID = profile?.PublicKeyBase58Check || null;
+    const userID = user?.profile?.PublicKeyBase58Check || null;
 
     const { data: isFollowing } = useQuery([['is-following', `${userID}-${profileID}`], { publicKey: userID, followingKey: profileID }], getIsFollowing, { enabled: !!userID, })
 
@@ -133,10 +133,10 @@ const ProfilePage = () => {
                 <div className='flex flex-col items-center justify-center w-full mt-8'>
                     <div className='tabs flex flex-row items-center justify-center'>
                         <div className='tab mr-4'>
-                            <h3 onClick={feedTab} className={`${active.feed ? `bg-[#5634ee] text-white` : ``} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee] text-black`}>Created</h3>
+                            <h3 onClick={feedTab} className={`${active.feed ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Created</h3>
                         </div>
                         <div className='tab'>
-                            <h3 onClick={saveTab} className={`${active.saved ? `bg-[#5634ee] text-white` : ``} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee] text-black`}>Saved</h3>
+                            <h3 onClick={saveTab} className={`${active.saved ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Saved</h3>
                         </div>
                     </div>
                     {active.feed && <div className='feedTab w-full flex flex-row items-center justify-center mt-8'>

@@ -86,3 +86,10 @@ export const LinkifyOptions = {
     },
     nl2br: true
 };
+
+
+
+
+export const removeDuplicates = (arr) => {
+    return arr.filter((item, index) => arr.indexOf(item) === index);
+}

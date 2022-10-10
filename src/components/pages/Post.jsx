@@ -109,8 +109,10 @@ const PostPage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='-ml-4 -mr-4 mt-10 text-center'>
-                        <TrendingTags isSingle={true} />
+                    <div className='mt-10 text-center'>
+                        <div className='max-w-6xl mx-auto'>
+                            <TrendingTags isSingle={true} isSearch={false} />
+                        </div>
                     </div>
                     <RelativePosts parent={post}/>
                 </Layout>

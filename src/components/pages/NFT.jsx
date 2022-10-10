@@ -12,7 +12,7 @@ const NFTPage = () => {
         return ( <ErrorLoader error={error}/>  )
     }
     if (isLoading) {
-        return ( <LoadingLoader/> )
+        return ( <LoadingLoader message="Loading NFT's for you."/> )
     }
     // if (isFetching) {
     //     return ( <FetchingLoader /> )
@@ -43,7 +43,7 @@ export const getServerSideProps = withCSR(async (ctx) => {
     let isError = false;
 
     try {
-        await queryClient.prefetchQuery(['nft-feed'], getNFTFeed({ limit: 200 }));
+        await queryClient.prefetchQuery(['nft-feed'], getNFTFeed);
     } catch (error) {
         isError = true
         ctx.res.statusCode = error.response.status;

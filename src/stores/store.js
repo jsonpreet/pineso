@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
+
 const useApp = create(
     persist(
         (set, get) => ({
@@ -14,7 +15,7 @@ const useApp = create(
             },
             setSearch: (params) => {
                 set((prev) => ({
-                    recentSearch: [...prev.recentSearch, params],
+                    recentSearch: params,
                 }));
             },
             setLoggedIn: (params) => {

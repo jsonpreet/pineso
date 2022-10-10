@@ -6,7 +6,7 @@ import axios from "axios";
 const getSingleTagFeed = async (tag) => {
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 100,
+        ResponseLimit: 20,
         FetchSubcomments: true,
         MediaRequired: true,
         SortByNew: true,
@@ -60,6 +60,34 @@ const getSingleTagFeed = async (tag) => {
             if (SUPPORTED_FORMATS.includes(ext)) {
                 return random[4]
             }
+        } else if (random[5].ImageURLs !== null && random[5].ImageURLs[0] !== '' && random[5].ImageURLs[0] !== undefined) {
+            const ext = get_url_extension(random[5].ImageURLs[0]);
+            if (SUPPORTED_FORMATS.includes(ext)) {
+                return random[5]
+            }
+        }
+        else if (random[6].ImageURLs !== null && random[6].ImageURLs[0] !== '' && random[6].ImageURLs[0] !== undefined) {
+            const ext = get_url_extension(random[6].ImageURLs[0]);
+            if (SUPPORTED_FORMATS.includes(ext)) {
+                return random[6]
+            }
+        } else if (random[7].ImageURLs !== null && random[7].ImageURLs[0] !== '' && random[7].ImageURLs[0] !== undefined) {
+           const ext = get_url_extension(random[7].ImageURLs[0]);
+            if (SUPPORTED_FORMATS.includes(ext)) {
+                return random[7]
+            }
+        } else if (random[8].ImageURLs !== null && random[8].ImageURLs[0] !== '' && random[8].ImageURLs[0] !== undefined) {
+           const ext = get_url_extension(random[3].ImageURLs[0]);
+            if (SUPPORTED_FORMATS.includes(ext)) {
+                return random[8]
+            }
+        } else if (random[9].ImageURLs !== null && random[9].ImageURLs[0] !== '' && random[9].ImageURLs[0] !== undefined) {
+           const ext = get_url_extension(random[9].ImageURLs[0]);
+            if (SUPPORTED_FORMATS.includes(ext)) {
+                return random[9]
+            }
+        } else {
+            return null
         }
     }
 }
@@ -83,7 +111,6 @@ export const getTrendingTagsWithFeed = async () => {
             return post
         });
         const posts = await Promise.all(promises);
-        console.log(posts);
         return posts
     }
     //     return tags.map((tag) => {

@@ -52,9 +52,9 @@ const UserCard = ({ follows, profile, user, isFollowing }) => {
                 {(isLoggedIn && userID !== profileID) ?
                     (isFollowing) ?
                         <button onClick={() => onFollow()} className='bg-[#ec05ad] hover:bg-[#5634ee] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button> :
-                        <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-gray-300 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
+                        <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-gray-200 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
                     :
-                    (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#ec05ad] hover:text-white bg-gray-300 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
+                    (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#ec05ad] hover:text-white bg-gray-200 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
                 }
             </div>
         </div>

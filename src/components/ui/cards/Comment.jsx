@@ -6,6 +6,7 @@ import Linkify from "linkify-react";
 import "linkify-plugin-hashtag";
 import "linkify-plugin-mention";
 import { LinkifyOptions } from "@app/lib/utils";
+import Image from "next/image";
 
 
 const CommentCard = ({ isSub, comment, profile}) => {
@@ -14,7 +15,14 @@ const CommentCard = ({ isSub, comment, profile}) => {
         <div className={`flex my-4 flex-col ${isSub ? `sub-comment` : ''}`}>
             <div className='flex flex-row'>
                 <div className='image bg-gray-300 shadow rounded-full w-[40px] h-[40px]'>
-                    <UserImage classes='w-[40px] shadow h-[40px]' username={profile?.Username} profile={profile} />
+                    {/* <UserImage classes='w-[40px] shadow h-[40px]' username={profile?.Username} profile={profile} /> */}
+                    <Image
+                        className={`rounded-full border border-gray-200`}
+                        alt={`${profile?.Username}'s profile picture`}
+                        src={profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${profile?.PublicKeyBase58Check}`}
+                        width={40}
+                        height={40}
+                    />
                 </div>
                 <div className='flex flex-col ml-2 items-start flex-1'>
                     <div className='flex flex-row items-center justify-center'>

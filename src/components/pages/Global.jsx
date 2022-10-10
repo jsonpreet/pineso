@@ -15,7 +15,7 @@ const GlobalPage = () => {
         return ( <ErrorLoader error={error}/>  )
     }
     if (isLoading) { 
-        return ( <LoadingLoader/> )
+        return ( <LoadingLoader message="Loading Global Pins for you."/> )
     }
     // if (isFetching) {
     //     return ( <FetchingLoader /> )

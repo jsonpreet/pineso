@@ -7,15 +7,15 @@ const Comments = ({ post }) => {
             <div>
                 <h3 className='text-lg font-semibold'><span className='mr-1'>{post.CommentCount}</span>comments</h3>
             </div>
-            {/* {comments?.map((comment, index) => {
+            {comments?.map((comment, index) => {
                 const profile = comment.ProfileEntryResponse;
                 return (
                     <CommentCard isSub={false} key={index} comment={comment} profile={profile} />
                 )
-            })} */}
-            {
+            })}
+            {/* {
                 post.CommentCount > 0 && comments?.length > 0 && <CommentCard isSub={false} comment={comments[0]} profile={comments[0].ProfileEntryResponse} />
-            }
+            } */}
 
         </div>
     )

@@ -13,6 +13,9 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    newNextLinkBehavior: true
+  }
 }
 
 module.exports = nextConfig

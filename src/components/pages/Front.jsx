@@ -14,7 +14,7 @@ const FrontPage = () => {
         return ( <ErrorLoader error={error}/>  )
     }
     if (isLoading) { 
-        return ( <LoadingLoader message="Loading Following Pins for you."/> )
+        return ( <LoadingLoader message={`Loading Hot Pins for you.`}/> )
     }
     // if (isFetching) {
     //     return ( <FetchingLoader /> )

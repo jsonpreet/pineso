@@ -18,16 +18,9 @@ const Home = () => {
   return (
     <>
       <Layout>
-        {isLoggedIn ? (
-          <Suspense fallback={<LoadingLoader />}>
-            <FrontPage />
+          <Suspense fallback={<LoadingLoader message={`${isLoggedIn ? `Loading Following Pins for you.` : `Loading Hot Pins for you.`}`} />}>
+            {isLoggedIn ? <FrontPage /> : <HotPage />}
           </Suspense>
-        ) : (
-          <Suspense fallback={<LoadingLoader />}>
-            <HotPage />
-          </Suspense>
-        )}
-        
       </Layout>
     </>
   )

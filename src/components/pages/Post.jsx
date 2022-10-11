@@ -18,6 +18,7 @@ import "linkify-plugin-mention";
 import { LinkifyOptions } from "@app/lib/utils";
 import Head from 'next/head';
 import { BASE_URL } from '@app/lib/constants';
+import { BsArrowLeftCircle, BsArrowLeftCircleFill } from 'react-icons/bs';
 
 const PostPage = () => {
     const router = useRouter();
@@ -81,21 +82,24 @@ const PostPage = () => {
                     <meta property="twitter:image" content={post.ImageURLs[0]} />
                 </Head>
                 <Layout>
-                    <div className='-mt-10'>
+                    <div className=' flex-none'>
+                        <div className='sm:hidden flex flex-col items-center relative justify-center'>
+                            <button className='absolute top-0 left-0 z-10 duration-75 delay-75 hover:text-[#ec05ad] text-gray-400' onClick={() => router.back()}> <BsArrowLeftCircleFill size={32}/> </button>
+                        </div>
                         <div ref={rootRef} className='hidden' style={{ width: `${imageSize?.width}px`, height: `${imageSize?.height}px`, backgroundImage: `url(${post.ImageURLs[0]})`}}/>
-                        <div className='w-2/4 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] rounded-3xl mx-auto'>
-                            <div className='flex flex-row'>
-                                <div className='image w-2/4 relative overflow-hidden border border-white/50 h-100 rounded-bl-3xl rounded-tl-3xl flex flex-col items-center justify-center p-4'>
+                        <div className='w-full max-w-[1024px] shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] rounded-3xl mx-auto'>
+                            <div className='flex flex-col lg:flex-row'>
+                                <div className='image w-full lg:w-2/4 relative overflow-hidden border border-white/50 h-100 rounded-bl-3xl rounded-tl-3xl flex flex-col items-center justify-center p-4'>
                                     <div style={{ backgroundImage: `url(${post.ImageURLs[0]})`, filter: 'blur(3px)', opacity: '.2'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/>    
                                     <LazyLoadImage
-                                        className='rounded-3xl'
+                                        className='rounded-3xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] object-cover'
                                         alt={`Pin by ${post.ProfileEntryResponse.Username}`}
                                         effect="blur"
                                         wrapperProps={{ className: 'flex flex-col z-10 rounded-3xl items-center justify-center ' }}
                                         src={post.ImageURLs[0]}
                                         />
                                 </div>
-                                <div className='content flex flex-col w-2/4 pt-8 pb-4 px-8'>
+                                <div className='content flex flex-col w-full lg:w-2/4 pt-8 pb-4 px-8'>
                                     <ShareCard rootRef={rootRef} post={post} />
                                     <UserCard user={user.profile} profile={post.ProfileEntryResponse} follows={follows} isFollowing={isFollowing} />
                                     <div className='mt-4 break-words body'>

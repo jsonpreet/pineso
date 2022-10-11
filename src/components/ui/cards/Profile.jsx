@@ -44,38 +44,6 @@ const ProfileCard = ({ profile }) => {
     }
 
     return (
-        // <div className='flex flex-row justify-between mb-4 items-center'>
-        //     <div className='flex flex-row justify-center'>
-        //         <div className='image bg-gray-300 shadow rounded-full w-20 h-20'>
-        //             <UserImage classes='w-20 shadow h-20' username={profile?.Username} profile={profile} />
-        //         </div>
-        //         <div className='flex flex-col ml-2 items-start justify-center'>
-        //             <div>
-        //                 <Link href={`/${profile.Username}`}>
-        //                     <a className='flex flex-row justify-center items-center'>
-        //                         <span className="mr-1 text-black font-semibold duration-75 delay-75 hover:text-[#ec05ad] leading-none">{profile.Username}</span>
-        //                         {profile.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
-        //                     </a>
-        //                 </Link>
-        //             </div>
-        //             <div className='flex flex-row items-center'>
-        //                 {userCoinPrice && <span className='text-[#ec05ad] mr-2'>≈${userCoinPrice.toFixed(2)} USD</span>}
-        //             </div>
-        //             <div>
-        //                 <span className='text-black leading-none'>{nFormatter(follows, 1)} Followers</span>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     <div className='follow -mt-2'>
-        //         {(isLoggedIn && userID !== profileID) ?
-        //             (isFollowing) ?
-        //                 <button onClick={() => onFollow()} className='bg-[#ec05ad] hover:bg-[#5634ee] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button> :
-        //                 <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-gray-300 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
-        //             :
-        //             (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#ec05ad] hover:text-white bg-gray-300 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
-        //         }
-        //     </div>
-        // </div>
         <div className='flex flex-col rounded-xl relative bg-gray-50 shadow mb-14 items-center'>
             <div className='flex flex-row pt-4 relative justify-center'>
                 <div className='image absolute -top-10 bg-gray-300 shadow rounded-full w-20 h-20'>
@@ -84,11 +52,9 @@ const ProfileCard = ({ profile }) => {
             </div>
             <div className='flex flex-col items-center pt-8 pb-4 justify-center'>
                 <div>
-                    <Link href={`/${profile.Username}`}>
-                        <a className='flex flex-row justify-center items-center'>
+                    <Link href={`/${profile.Username}`} className='flex flex-row justify-center items-center'>
                             <span className="mr-1 text-black font-semibold duration-75 delay-75 hover:text-[#ec05ad] leading-none">{profile.Username}</span>
                             {profile.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
-                        </a>
                     </Link>
                 </div>
                 <div className='flex flex-row py-2 items-center'>

@@ -12,11 +12,9 @@ const PostPage = dynamic(() => import('@app/components/pages/Post'), {
 const Single = () => {
     return (
         <>
-            <Layout>
-                <Suspense fallback={<LoadingLoader/>}>
-                    <PostPage />
-                </Suspense>
-            </Layout>
+            <Suspense fallback={<LoadingLoader/>}>
+                <PostPage />
+            </Suspense>
         </>
     )
 }

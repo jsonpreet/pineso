@@ -32,14 +32,16 @@ const SearchPage = () => {
     }
     if (isFetched) {
         return (
-            <>                
+            <>   
                 <div className='flex flex-col items-center justify-center w-full'>
-                    <div className='tabs rounded-xl sticky top-[0px] pt-[20px] pb-[20px] bg-white backdrop-blur-3xl backdrop-xl bg-opacity-50 w-full z-20 flex flex-row items-center justify-center'>
-                        <div className='tab mr-4'>
-                            <h3 onClick={exploreTab} className={`${active.explore ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Explore</h3>
-                        </div>
-                        <div className='tab'>
-                            <h3 onClick={profilesTab} className={`${active.profiles ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Profiles</h3>
+                    <div className='sticky top-[0px] '>
+                        <div className='tabs rounded-xl bg-white pt-[20px] pb-[20px] backdrop-blur-3xl backdrop-xl bg-opacity-50 w-full z-20 flex flex-row items-center justify-center'>
+                            <div className='tab mr-4'>
+                                <h3 onClick={exploreTab} className={`${active.explore ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Explore</h3>
+                            </div>
+                            <div className='tab'>
+                                <h3 onClick={profilesTab} className={`${active.profiles ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Profiles</h3>
+                            </div>
                         </div>
                     </div>
                     <div className='w-full mt-14'>
@@ -63,7 +65,7 @@ const SearchPage = () => {
                             </div>
                         }
                     </div>
-                </div>
+                </div>    
             </>
         )
     }

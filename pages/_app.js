@@ -8,6 +8,7 @@ import '@styles/app.scss';
 import { config } from '@app/lib/constants';
 import { Suspense, useState } from 'react';
 import Head from 'next/head';
+import { NextUIProvider } from '@nextui-org/react';
 
 
 function MyApp({ Component, pageProps }) {
@@ -21,7 +22,9 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider enableSystem={true} attribute="class">
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <Component {...pageProps} />
+            <NextUIProvider>
+              <Component {...pageProps} />
+            </NextUIProvider>
             <Devtools />
           </Hydrate>
         </QueryClientProvider>

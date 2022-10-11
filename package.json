@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
+    "@nextui-org/react": "^1.0.0-beta.10",
     "@tanstack/react-query": "^4.10.1",
     "@tanstack/react-query-devtools": "^4.10.1",
     "animate.css": "^4.1.1",
@@ -27,6 +28,7 @@
     "nanoid": "^4.0.0",
     "next": "12.3.1",
     "next-seo": "^5.5.0",
+    "next-share": "^0.18.2",
     "next-themes": "^0.2.1",
     "nextjs-progressbar": "^0.0.14",
     "plaiceholder": "^2.5.0",

@@ -116,7 +116,7 @@ const Header = () => {
         const request = {
             "publicKey": "",
             "transactionSpendingLimitResponse": {
-                "GlobalDESOLimit": 100000000000,
+                "GlobalDESOLimit": 1,
                 "TransactionCountLimitMap": {
                 "SUBMIT_POST": 100000,
                 "FOLLOW": 100000

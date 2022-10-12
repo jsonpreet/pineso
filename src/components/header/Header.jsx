@@ -113,20 +113,12 @@ const Header = () => {
     });
 
     const login = async () => {
-        const request = {
-            "publicKey": "",
-            "transactionSpendingLimitResponse": {
-                "GlobalDESOLimit": 1000000000,
-                "TransactionCountLimitMap": {
-                "SUBMIT_POST": 100000,
-                "FOLLOW": 100000
-                },
-            }
-        };
+        const request = 3;
         if (deso) {
-            const response = await deso.identity.derive(request);
+            const response = await deso.identity.login(request);
+                console.log(response);
             if (response) {
-                const data = await getSingleProfile(response?.publicKeyBase58Check);
+                const data = await getSingleProfile(response?.key);
                 setUser({profile: data, data: response});
                 setLoggedIn(true)
             } else {

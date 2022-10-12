@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { Layout } from '@app/components/layout';
 import { LoadingLoader } from '@app/components/loader';
 import Head from 'next/head';
+import { BASE_URL } from "@app/lib/constants"
 
 const LatestPage = dynamic(() => import('@app/components/pages/Latest'), {
   suspense: true,

@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
+import { BASE_URL } from "@app/lib/constants"
 
 import { Layout } from '@app/components/layout';
 import { LoadingLoader } from '@app/components/loader';

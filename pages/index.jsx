@@ -5,6 +5,7 @@ import { Layout } from '@app/components/layout';
 import { LoadingLoader } from '@app/components/loader';
 import useApp from '@app/stores/store';
 import Head from 'next/head';
+import { BASE_URL } from "@app/lib/constants"
 
 const HotPage = dynamic(() => import('@app/components/pages/Hot'), {
   suspense: true,

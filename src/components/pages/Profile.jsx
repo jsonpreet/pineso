@@ -122,7 +122,7 @@ const ProfilePage = () => {
                                 </div>
                                 <div className='flex flex-row items-start mt-3 justify-start'>
                                     <div>
-                                        <a className='flex group flex-row items-center' href={`${EXTERNAL_LINK}/u/${profile.Username}`} target="_blank">
+                                        <a className='flex group flex-row items-center' href={`${EXTERNAL_LINK}/u/${profile.Username}`}  rel="noreferrer" target="_blank">
                                             <IoDiamondOutline className='text-blue-500 duration-75 delay-75 group-hover:text-[#ec05ad]' size={17} />
                                             <span className='text-blue-500 duration-75 delay-75 ml-1 group-hover:text-[#ec05ad] text-md font-semibold'>@{profile.Username}</span>
                                         </a>
@@ -164,7 +164,7 @@ const ProfilePage = () => {
                                 </div>
                                 <div className='flex flex-row items-start mt-3 justify-start'>
                                     <div>
-                                        <a className='flex group flex-row items-center' href={`${EXTERNAL_LINK}/u/${profile.Username}`} target="_blank">
+                                        <a className='flex group flex-row items-center' href={`${EXTERNAL_LINK}/u/${profile.Username}`} rel="noreferrer" target="_blank">
                                             <IoDiamondOutline className='text-blue-500 duration-75 delay-75 group-hover:text-[#ec05ad]' size={17} />
                                             <span className='text-blue-500 duration-75 delay-75 ml-1 group-hover:text-[#ec05ad] text-md font-semibold'>@{profile.Username}</span>
                                         </a>

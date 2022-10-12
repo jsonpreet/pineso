@@ -2,4 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 @import 'react-lazy-load-image-component/src/effects/blur.css';
-@import 'react-toastify/dist/ReactToastify.css'
+@import 'react-toastify/dist/ReactToastify.css';
+@import "feeder-react-feedback/dist/feeder-react-feedback.css";

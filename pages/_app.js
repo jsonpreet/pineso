@@ -5,10 +5,12 @@ import { ThemeProvider } from 'next-themes';
 import Devtools from '@app/components/devtools';
 import '@styles/globals.css';
 import '@styles/app.scss';
-import { config } from '@app/lib/constants';
+import { config, FEEDER_PROJECT_ID } from '@app/lib/constants';
 import { Suspense, useState } from 'react';
 import Head from 'next/head';
 import { NextUIProvider } from '@nextui-org/react';
+import loadable from "@loadable/component";
+const Feedback = loadable(() => import("feeder-react-feedback/dist/Feedback"));
 
 
 function MyApp({ Component, pageProps }) {
@@ -25,6 +27,7 @@ function MyApp({ Component, pageProps }) {
             <NextUIProvider>
               <Component {...pageProps} />
             </NextUIProvider>
+            <Feedback primaryColor='#ec05ad' hoverBorderColor='#ec05ad' projectId={FEEDER_PROJECT_ID} />
             <Devtools />
           </Hydrate>
         </QueryClientProvider>

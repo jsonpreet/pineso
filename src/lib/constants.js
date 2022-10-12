@@ -3,6 +3,8 @@ export const BASE_IDENTITY_URI = process.env.NEXT_PUBLIC_NODE_IDENTITY_URL || 'h
 export const EXTERNAL_LINK = process.env.NEXT_PUBLIC_EXTERNAL_URL || 'https://diamondapp.com';
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://pineso.io';
 
+export const FEEDER_PROJECT_ID = process.env.NEXT_PUBLIC_FEEDER_PROJECT_ID || '63470396bfda730004a8eb3c';
+
 export const config = {
     defaultOptions: {
         queries: {

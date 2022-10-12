@@ -18,11 +18,11 @@ export const getNFTFeed = async () => {
             return post.IsNFT === true && post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
         });
 
-        filtered.map(async (post) => {
-            getImageSize(post.ImageURLs[0]).then(({ width, height }) => {
-                post.imageSize = { width, height };
-            })
-        });
+        // filtered.map(async (post) => {
+        //     getImageSize(post.ImageURLs[0]).then(({ width, height }) => {
+        //         post.imageSize = { width, height };
+        //     })
+        // });
 
         return filtered
     }

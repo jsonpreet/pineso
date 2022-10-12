@@ -89,7 +89,7 @@ const PostPage = () => {
                                 <button className='absolute top-0 left-0 z-10 duration-75 delay-75 hover:text-[#ec05ad] text-gray-400' onClick={() => router.back()}> <BsArrowLeftCircleFill size={32}/> </button>
                             </div>
                         </BrowserView>
-                        <div ref={rootRef} className='hidden' style={{ width: `${imageSize?.width}px`, height: `${imageSize?.height}px`, backgroundImage: `url(${post.ImageURLs[0]})`}}/>
+                        {/* <div ref={rootRef} className='hidden' style={{ width: `${imageSize?.width}px`, height: `${imageSize?.height}px`, backgroundImage: `url(${post.ImageURLs[0]})`}}/> */}
                         <div className='w-full max-w-[1024px] shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] rounded-3xl mx-auto'>
                             <div className='flex flex-col lg:flex-row'>
                                 <div className='image w-full lg:w-2/4 relative overflow-hidden border border-white/50 h-100 rounded-3xl sm:rounded-bl-3xl sm:rounded-tl-3xl flex flex-col items-center justify-center p-4'>

@@ -20,10 +20,10 @@ const Home = () => {
     <>
       <Head>
           <title>Pineso</title>
-          <meta property="og:url" content="https://pineso.io" />
+          <meta property="og:url" content={BASE_URL} />
           <meta property="og:title" content="Pineso" />
           <meta property="og:description" content="Build with Deso Blockchain" />
-          <meta property="og:image" content="https://pineso.io/images/icon-512x512.png" />
+          <meta property="og:image" content="/images/icon-512x512.png" />
       </Head>
       <Layout>
           <Suspense fallback={<LoadingLoader message={`${isLoggedIn ? `Loading Following Pins for you.` : `Loading Hot Pins for you.`}`} />}>

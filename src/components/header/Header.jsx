@@ -405,7 +405,7 @@ const Header = () => {
                                                 </a>
                                             </Menu.Item>
                                         </div>
-                                        <div className="py-1">
+                                        {/* <div className="py-1">
                                             <Menu.Item>
                                                 <Link href='/about'>
                                                     <a className="flex flex-row items-center duration-75 delay-75 hover:text-pink-600 hover:bg-gray-100 cursor-pointer px-4 py-2">
@@ -414,7 +414,7 @@ const Header = () => {
                                                     </a>
                                                 </Link>
                                             </Menu.Item>
-                                        </div>
+                                        </div> */}
                                     </Menu.Items>
                                 </Transition>
                             </Menu>
@@ -478,12 +478,12 @@ const Header = () => {
                                             <IoDiamondOutline className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
                                             <span>Diamond</span>
                                         </a>
-                                        <Link href='/about' passHref>
+                                        {/* <Link href='/about' passHref>
                                             <a className="flex flex-row duration-75 delay-75 hover:text-pink-600 hover:bg-gray-100 cursor-pointer px-4 py-2">
                                                 <BsArrowRightShort className="mr-1" size={20} />
                                                 <span>About</span>
                                             </a>
-                                        </Link>
+                                        </Link> */}
                                         {isLoggedIn ?
                                             <a onClick={() => logout()} className='flex flex-row duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 pb-2'>
                                                 <BiExit className='text-black mr-1' size={17} />

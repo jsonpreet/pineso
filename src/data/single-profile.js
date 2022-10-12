@@ -4,13 +4,17 @@ import axios from "axios";
 
 export const getSingleProfile = async (publicKey) => {
     const endpoint = 'get-single-profile';
-    const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        PublicKeyBase58Check: publicKey
-    });
-    if (response === null) {
-        return null
+    if (publicKey !== undefined && publicKey !== null) {
+        const response = await axios.post(`${BASE_URI}/${endpoint}`, {
+            PublicKeyBase58Check: publicKey
+        });
+        if (response === null) {
+            return null
+        } else {
+            return response.data.Profile;
+        }
     } else {
-        return response.data.Profile;
+        return null
     }
 }
 
@@ -25,6 +29,7 @@ export const getSingleProfilebyUsername = async ({ queryKey }) => {
     } else {
         return response.data.Profile;
     }
+
 }
 
 export const FetchSingleProfilebyUsername = ({username}) => {

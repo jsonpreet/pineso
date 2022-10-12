@@ -5,21 +5,19 @@ import { Layout } from '@app/components/layout';
 import { LoadingLoader } from '@app/components/loader';
 import { useRouter } from 'next/router';
 
-const ProfilePage = dynamic(() => import('@app/components/pages/Profile'), {
-  suspense: true,
+const SearchPage = dynamic(() => import('@app/components/pages/Search'), {
+    ssr: false
 })
 
-const Profile = () => {
+const Search = () => {
     const router = useRouter()
     return (
         <>
             <Layout>
-                <Suspense fallback={<LoadingLoader />}>
-                    <ProfilePage />
-                </Suspense>
+                <SearchPage />
             </Layout>
         </>
     )
 }
 
-export default Profile
+export default Search

@@ -27,7 +27,8 @@ const Post = ({post, scrollPosition}) => {
                     },
                 }}
             >
-                <Link href={`/pin/${post.PostHashHex}`} passHref shallow={true} className='cursor-zoom group flex relative flex-col' onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
+                <Link href={`/pin/${post.PostHashHex}`} passHref shallow={true}>
+                    <a className='cursor-zoom group flex relative flex-col' onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
                         <LazyLoadImage
                             alt={`Pin by ${post.ProfileEntryResponse?.Username}`}
                             effect="blur"
@@ -40,6 +41,7 @@ const Post = ({post, scrollPosition}) => {
                             className='rounded-xl border border-gray-100'
                         />
                         <div className={`${show ? `opacity-100` : `opacity-0`} rounded-xl flex absolute top-0 left-0 bg-black bg-opacity-40 delay-75 duration-75 w-full h-full flex-col items-start justify-start px-4 py-1`}/>
+                    </a>
                 </Link>
             </motion.div>
         </>

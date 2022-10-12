@@ -1,7 +1,7 @@
 import { CommentCard } from '@components/ui/cards';
 
 const Comments = ({ post }) => {
-    const comments = post.Comments
+    const comments = post?.Comments?.slice(0, 3)
     return (
         <div className='flex flex-col mt-4'>
             <div>

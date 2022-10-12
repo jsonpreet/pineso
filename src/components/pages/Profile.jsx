@@ -15,6 +15,7 @@ import { IoDiamondOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import { Post } from '@components/post';
 import Head from 'next/head';
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 const ProfilePage = () => {
     const router = useRouter();
@@ -24,7 +25,7 @@ const ProfilePage = () => {
     const isLoggedIn = useApp((state) => state.isLoggedIn)
     const user = useApp((state) => state.user)
 
-    const { data: profile, isLoading, isFetching, isFetched, error, isError } = FetchSingleProfilebyUsername({ username: username });
+    const { data: profile, isLoading: profileLoading, isFetching, isFetched: profileFetched, error, isError } = FetchSingleProfilebyUsername({ username: username });
     const { data: exchange } = FetchExchangeRate();
 
     const profileID = profile?.PublicKeyBase58Check || null;
@@ -70,93 +71,138 @@ const ProfilePage = () => {
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
     }
-    if (isLoading) {
+    if (profileLoading) {
         return ( <LoadingLoader message={`Loading Profile`}/> )
     }
-
-    return (
-        <>
-            <Head>
-                <meta name="description" content={profile.Description}/>
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={`${BASE_URL}/${profile?.Username}`} />
-                <meta property="og:title" content={`${profile?.Username} on Pineso`} />
-                <meta property="og:description" content={profile.Description}/>
-                <meta property="og:image" content={profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${profile?.PublicKeyBase58Check}`}/>
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:url" content={`${BASE_URL}/${profile?.Username}`} />
-                <meta property="twitter:title" content={`${profile?.Username} on Pineso`} />
-                <meta property="twitter:description" content={profile.Description}/>
-                <meta property="twitter:image" content={profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${profile?.PublicKeyBase58Check}`} />
-            </Head>
-            <div className='py-12 flex relative flex-col items-center justify-center'>
-                <div className='z-10 w-full flex flex-row items-start justify-start max-w-[600px]'>
-                    <UserImage classes={'shadow-lg w-40 h-40 border border-gray-200'} username={profile?.Username} profile={profile} />
-                    <div className='flex flex-col ml-4 flex-auto'>
-                        <div className='flex flex-row items-start'>
-                            <div className='flex-auto flex flex-row items-center'>
-                                <h1 className='text-3xl font-bold leading-none capitalize text-black'>{profile.Username}</h1>
-                                {profile?.IsVerified && <span><BsPatchCheckFill className="ml-1 text-[#ec05ad]" size={22} /></span>}
+    if(profileFetched){
+        return (
+            <>
+                <Head>
+                    <meta name="description" content={profile?.Description}/>
+                    <meta property="og:type" content="website" />
+                    <meta property="og:url" content={`${BASE_URL}/${profile?.Username}`} />
+                    <meta property="og:title" content={`${profile?.Username} on Pineso`} />
+                    <meta property="og:description" content={profile?.Description}/>
+                    <meta property="og:image" content={profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${profile?.PublicKeyBase58Check}`}/>
+                    <meta property="twitter:card" content="summary_large_image" />
+                    <meta property="twitter:url" content={`${BASE_URL}/${profile?.Username}`} />
+                    <meta property="twitter:title" content={`${profile?.Username} on Pineso`} />
+                    <meta property="twitter:description" content={profile?.Description}/>
+                    <meta property="twitter:image" content={profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${profile?.PublicKeyBase58Check}`} />
+                </Head>
+                <div className='py-12 flex relative flex-col items-center justify-center'>
+                    <BrowserView>
+                        <div className='z-10 w-full flex flex-row items-start justify-start max-w-[600px]'>
+                            <UserImage classes={'shadow-lg w-40 h-40 border border-gray-200'} username={profile?.Username} profile={profile} />
+                            <div className='flex flex-col ml-4 flex-auto'>
+                                <div className='flex flex-row items-start'>
+                                    <div className='flex-auto flex flex-row items-center'>
+                                        <h1 className='text-3xl font-bold leading-none capitalize text-black'>{profile?.Username}</h1>
+                                        {profile?.IsVerified && <span><BsPatchCheckFill className="ml-1 text-[#ec05ad]" size={22} /></span>}
+                                    </div>
+                                    <div className=''>
+                                        {(isLoggedIn && userID !== profileID) ?
+                                        
+                                            (isFollowing) ?
+                                                <button onClick={() => onFollow()} className='bg-[#5634ee] hover:bg-[#ec05ad] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button>
+                                                :
+                                                <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
+                                            :
+                                            (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
+                                        }
+                                    </div>
+                                </div>
+                                <div className='flex flex-row items-center'>
+                                    {userCoinPrice && <span className='text-[#ec05ad] font-bold text-md mr-2'>≈${userCoinPrice.toFixed(2)} USD</span>}
+                                </div>
+                                <div className='mt-3'>
+                                    <Linkify options={LinkifyOptions}>
+                                        {profile?.Description ? profile.Description : ''}
+                                    </Linkify>
+                                </div>
+                                <div className='flex flex-row items-start mt-3 justify-start'>
+                                    <div>
+                                        <a className='flex group flex-row items-center' href={`${EXTERNAL_LINK}/u/${profile.Username}`} target="_blank">
+                                            <IoDiamondOutline className='text-blue-500 duration-75 delay-75 group-hover:text-[#ec05ad]' size={17} />
+                                            <span className='text-blue-500 duration-75 delay-75 ml-1 group-hover:text-[#ec05ad] text-md font-semibold'>@{profile.Username}</span>
+                                        </a>
+                                    </div>
+                                    <div className='ml-4'>{nFormatter(follows, 1)} Followers</div>
+                                    <div className='ml-4'>{nFormatter(followings, 1)} Following</div>
+                                </div>
                             </div>
-                            <div className=''>
-                                {(isLoggedIn && userID !== profileID) ?
-                                
-                                    (isFollowing) ?
-                                        <button onClick={() => onFollow()} className='bg-[#5634ee] hover:bg-[#ec05ad] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button>
-                                        :
-                                        <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
-                                    :
-                                    (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
-                                }
+                        </div>
+                    </BrowserView>
+                    <MobileView>
+                        <div className='z-10 w-full flex flex-col items-center -mt-12'>
+                            <UserImage classes={'shadow-lg w-40 h-40 border border-gray-200'} username={profile?.Username} profile={profile} />
+                            <div className='flex flex-col flex-auto'>
+                                <div className='flex flex-col justify-center items-center'>
+                                    <div className='flex flex-row w-full justify-center items-center'>
+                                        <h1 className='text-3xl font-bold leading-none capitalize text-black'>{profile?.Username}</h1>
+                                        {profile?.IsVerified && <span><BsPatchCheckFill className="ml-1 text-[#ec05ad]" size={22} /></span>}
+                                    </div>
+                                    <div className='flex flex-row items-center justify-center'>
+                                        {(isLoggedIn && userID !== profileID) ?
+                                        
+                                            (isFollowing) ?
+                                                <button onClick={() => onFollow()} className='bg-[#5634ee] hover:bg-[#ec05ad] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button>
+                                                :
+                                                <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
+                                            :
+                                            (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
+                                        }
+                                    </div>
+                                </div>
+                                <div className='flex flex-row justify-center items-center'>
+                                    {userCoinPrice && <span className='text-[#ec05ad] font-bold text-md mr-2'>≈${userCoinPrice.toFixed(2)} USD</span>}
+                                </div>
+                                <div className='mt-3'>
+                                    <Linkify options={LinkifyOptions}>
+                                        {profile?.Description ? profile.Description : ''}
+                                    </Linkify>
+                                </div>
+                                <div className='flex flex-row items-start mt-3 justify-start'>
+                                    <div>
+                                        <a className='flex group flex-row items-center' href={`${EXTERNAL_LINK}/u/${profile.Username}`} target="_blank">
+                                            <IoDiamondOutline className='text-blue-500 duration-75 delay-75 group-hover:text-[#ec05ad]' size={17} />
+                                            <span className='text-blue-500 duration-75 delay-75 ml-1 group-hover:text-[#ec05ad] text-md font-semibold'>@{profile.Username}</span>
+                                        </a>
+                                    </div>
+                                    <div className='ml-4'>{nFormatter(follows, 1)} Followers</div>
+                                    <div className='ml-4'>{nFormatter(followings, 1)} Following</div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </MobileView>
+                    <div className='flex flex-col items-center justify-center w-full mt-8'>
+                        <div className='tabs flex flex-row items-center justify-center'>
+                            <div className='tab mr-4'>
+                                <h3 onClick={feedTab} className={`${active.feed ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Created</h3>
+                            </div>
+                            <div className='tab'>
+                                <h3 onClick={saveTab} className={`${active.saved ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Saved</h3>
                             </div>
                         </div>
-                        <div className='flex flex-row items-center'>
-                            {userCoinPrice && <span className='text-[#ec05ad] font-bold text-md mr-2'>≈${userCoinPrice.toFixed(2)} USD</span>}
-                        </div>
-                        <div className='mt-3'>
-                            <Linkify options={LinkifyOptions}>
-                                {profile.Description}
-                            </Linkify>
-                        </div>
-                        <div className='flex flex-row items-start mt-3 justify-start'>
-                            <div>
-                                <a className='flex group flex-row items-center' href={`${EXTERNAL_LINK}/u/${profile.Username}`} target="_blank">
-                                    <IoDiamondOutline className='text-blue-500 duration-75 delay-75 group-hover:text-[#ec05ad]' size={17} />
-                                    <span className='text-blue-500 duration-75 delay-75 ml-1 group-hover:text-[#ec05ad] text-md font-semibold'>@{profile.Username}</span>
-                                </a>
-                            </div>
-                            <div className='ml-4'>{nFormatter(follows, 1)} Followers</div>
-                            <div className='ml-4'>{nFormatter(followings, 1)} Following</div>
-                        </div>
+                        {active.feed && <div className='feedTab w-full flex flex-row items-center justify-center mt-8'>
+                            {userPostsIsLoading && <Loader className={`h-7 w-7 text-[#ec05ad]`} />}
+                            {userPostsIsFetched && userPosts?.length === 0 && <div className='text-center text-[#ec05ad] font-bold text-xl'>No Pins</div>}
+                            {userPostsIsFetched && userPosts?.length > 0 &&
+                                <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
+                                    {userPosts.map((post, index) => {
+                                        return <Post post={post} key={index} />
+                                    })}
+                                </div>
+                            }
+                        </div>}
+                        {active.saved && <div className='feedTab w-full mt-8'>
+                            <div className='text-center text-[#ec05ad] font-bold text-xl'>No Pins</div>
+                        </div>}
                     </div>
                 </div>
-                <div className='flex flex-col items-center justify-center w-full mt-8'>
-                    <div className='tabs flex flex-row items-center justify-center'>
-                        <div className='tab mr-4'>
-                            <h3 onClick={feedTab} className={`${active.feed ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Created</h3>
-                        </div>
-                        <div className='tab'>
-                            <h3 onClick={saveTab} className={`${active.saved ? `bg-[#5634ee] text-white` : ` text-black`} cursor-pointer text-[16px] font-medium duration-75 delay-75 hover:text-white px-3 py-1 rounded-full hover:bg-[#5634ee]`}>Saved</h3>
-                        </div>
-                    </div>
-                    {active.feed && <div className='feedTab w-full flex flex-row items-center justify-center mt-8'>
-                        {userPostsIsLoading && <Loader className={`h-7 w-7 text-[#ec05ad]`} />}
-                        {userPostsIsFetched && userPosts?.length === 0 && <div className='text-center text-[#ec05ad] font-bold text-xl'>No Pins</div>}
-                        {userPostsIsFetched && userPosts?.length > 0 &&
-                            <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
-                                {userPosts.map((post, index) => {
-                                    return <Post post={post} key={index} />
-                                })}
-                            </div>
-                        }
-                    </div>}
-                    {active.saved && <div className='feedTab w-full mt-8'>
-                        <div className='text-center text-[#ec05ad] font-bold text-xl'>No Pins</div>
-                    </div>}
-                </div>
-            </div>
-        </>
-    )
+            </>
+        )
+    }
 }
 
 export default ProfilePage

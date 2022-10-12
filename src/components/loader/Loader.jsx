@@ -15,7 +15,7 @@ export function FetchingLoader({message}) {
   return (
     <div className='flex flex-col justify-center items-center bg-white h-screen -my-[20px]'>
       <Loader />
-      <div className='text-black mt-[30px] text-3xl font-semibold'>{message ? message : `We are Fetching new Pins for you.`}</div>
+      <div className='text-black mt-[30px] sm:text-3xl text-xl font-semibold'>{message ? message : `We are Fetching new Pins for you.`}</div>
     </div>
   )
 }
@@ -24,7 +24,7 @@ export function LoadingLoader({message}) {
   return (
     <div className={`flex flex-col justify-center items-center bg-white h-screen -my-[20px]`}>
       <Loader />
-      <div className='text-black mt-[30px] text-3xl font-semibold'>{message ? message : `Loading Latest Pins for you.`}</div>
+      <div className='text-black mt-[30px] sm:text-3xl text-xl font-semibold'>{message ? message : `Loading Latest Pins for you.`}</div>
     </div>
   )
 }
@@ -33,7 +33,7 @@ export function ErrorLoader({error}) {
   return (
     <div className='flex flex-col justify-center items-center bg-white h-screen -my-[20px]'>
       <Loader />
-      <div className='text-black mt-[30px] text-3xl font-semibold'>{error}</div>
+      <div className='text-black mt-[30px] sm:text-3xl text-xl font-semibold'>{error}</div>
     </div>
   )
 }

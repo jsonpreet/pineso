@@ -8,7 +8,7 @@ export const getSearch = async (search) => {
     const { data } = await axios.post(`${BASE_URI}/${endpoint}`, {
         AddGlobalFeedBool: false,
         FetchUsersThatHODL: false,
-        NumToFetch:20,
+        NumToFetch:100,
         UsernamePrefix:search,
     });
     return data;

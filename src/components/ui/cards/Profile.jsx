@@ -47,20 +47,26 @@ const ProfileCard = ({ profile }) => {
         <div className='flex flex-col rounded-xl relative bg-gray-50 shadow mb-14 items-center'>
             <div className='flex flex-row pt-4 relative justify-center'>
                 <div className='image absolute -top-10 bg-gray-300 shadow rounded-full w-20 h-20'>
-                    <UserImage classes='w-20 shadow h-20' username={profile?.Username} profile={profile} />
+                    <Link href={`/${profile.Username}`}>
+                        <a>
+                            <UserImage classes='w-20 shadow h-20' username={profile?.Username} profile={profile} />
+                        </a>
+                    </Link>
                 </div>
             </div>
             <div className='flex flex-col items-center pt-8 pb-4 justify-center'>
                 <div>
                     <Link href={`/${profile.Username}`} className='flex flex-row justify-center items-center'>
+                        <a>
                             <span className="mr-1 text-black font-semibold duration-75 delay-75 hover:text-[#ec05ad] leading-none">{profile.Username}</span>
                             {profile.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
+                        </a>
                     </Link>
                 </div>
                 <div className='flex flex-row py-2 items-center'>
                     <span className='text-[#ec05ad] mr-2'>≈${userCoinPrice.toFixed(2)} USD</span>
                 </div>
-                <div className='flex flex-row items-center'>
+                <div className='flex sm:flex-row flex-col items-center'>
                     <span className='text-black mr-4 leading-none'>{nFormatter(follows, 1)} Followers</span>
                     <span className='text-black leading-none'>{nFormatter(followings, 1)} Followings</span>
                 </div>

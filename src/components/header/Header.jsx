@@ -401,13 +401,13 @@ const Header = () => {
                                                 <span className="block px-4 py-2 text-sm">Follow</span>
                                             </Menu.Item>
                                             <Menu.Item>
-                                                <a href='https://twitter.com/pinesoio' target='_blank' className='flex flex-row items-center duration-75 delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                                <a href='https://twitter.com/pinesoio' rel="noreferrer" target='_blank' className='flex flex-row items-center duration-75 delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
                                                     <FaTwitter className='mr-1 text-[#1da1f2]' size={17} />
                                                     <span>Twitter</span>
                                                 </a>
                                             </Menu.Item>
                                             <Menu.Item>
-                                                <a href='https://diamondapp.com/u/Pineso' target='_blank' className='flex flex-row items-center duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                                <a href='https://diamondapp.com/u/Pineso' rel="noreferrer" target='_blank' className='flex flex-row items-center duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
                                                     <IoDiamondOutline className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
                                                     <span>Diamond</span>
                                                 </a>
@@ -478,11 +478,11 @@ const Header = () => {
                                             <FaTimes size={12} />
                                         </button>
                                         <h3 className="text-gray-500 px-4 pb-2">Follow</h3>
-                                        <a href='https://twitter.com/pinesoio' target='_blank' className='flex flex-row duration-75 delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                        <a href='https://twitter.com/pinesoio' rel="noreferrer" target='_blank' className='flex flex-row duration-75 delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
                                             <FaTwitter className='mr-1 text-[#1da1f2]' size={17} />
                                             <span>Twitter</span>
                                         </a>
-                                        <a href='https://diamondapp.com/u/Pineso' target='_blank' className='flex flex-row duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                        <a href='https://diamondapp.com/u/Pineso' rel="noreferrer" target='_blank' className='flex flex-row duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
                                             <IoDiamondOutline className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
                                             <span>Diamond</span>
                                         </a>

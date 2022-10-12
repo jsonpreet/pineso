@@ -1,9 +1,10 @@
 {
   "extends": "next",
   "rules": {
-    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/rules-of-hooks": "off",
     "react-hooks/exhaustive-deps": "off",
     "react/no-unescaped-entities": "off",
+    "import/no-anonymous-default-export": "off",
     "@next/next/no-page-custom-font": "off"
   }
 }

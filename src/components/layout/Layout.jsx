@@ -2,7 +2,6 @@ import { Header } from '@components/header';
 import { ToastContainer, toast } from 'react-toastify';
 import TrendingTags from '@components/ui/TrendingTags';
 import { useRouter } from 'next/router';
-import { Footer } from '@components/footer';
 
 const Layout = ({ children }) => {
     const router = useRouter();

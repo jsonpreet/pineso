@@ -1,7 +1,7 @@
-export const BASE_URI = 'https://node.deso.org/api/v0';
-export const BASE_IDENTITY_URI = 'https://identity.deso.org';
-export const EXTERNAL_LINK = 'https://diamondapp.com';
-export const BASE_URL = 'https://pineso.io';
+export const BASE_URI = process.env.NODE_API_URL || 'https://node.deso.org/api/v0';
+export const BASE_IDENTITY_URI = process.env.NODE_IDENTITY_URL || 'https://identity.deso.org';
+export const EXTERNAL_LINK = process.env.EXTERNAL_URL || 'https://diamondapp.com';
+export const BASE_URL = process.env.BASE_URL || 'https://pineso.io';
 
 export const config = {
     defaultOptions: {

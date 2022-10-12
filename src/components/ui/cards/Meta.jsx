@@ -26,7 +26,7 @@ const MetaCard = ({ post }) => {
                 </div>
             </div>
             <div className="flex flex-row flex-1 items-center justify-end">
-                <a href={`${EXTERNAL_LINK}/posts/${post.PostHashHex}`} target="_blank" className="flex text-gray-700 items-center group duration-75 delay-75 hover:text-black flex-row">
+                <a href={`${EXTERNAL_LINK}/posts/${post.PostHashHex}`}  rel="noreferrer" target="_blank" className="flex text-gray-700 items-center group duration-75 delay-75 hover:text-black flex-row">
                     <HiExternalLink size={20} />
                     <span className="ml-1 text-sm">{calculateDurationUntilNow(post.TimestampNanos)}</span>
                 </a>

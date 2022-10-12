@@ -15,6 +15,7 @@ import { BsArrowRightShort, BsFileArrowDown, BsPatchCheckFill, BsPatchQuestionFi
 import { BiExit, BiSearch } from "react-icons/bi";
 import UserImage from '@components/ui/UserImage';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import { FaTimes, FaTwitter } from "react-icons/fa";
 
 const SearchPage = () => {
     const router = useRouter()

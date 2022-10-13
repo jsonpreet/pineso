@@ -245,9 +245,7 @@ const Header = () => {
                                                             <div className="flex flex-row items-start">
                                                                 <span className="mr-1 text-black font-semibold duration-75 delay-75 hover:text-[#ec05ad] leading-none">{search.Username}</span>
                                                                 {search.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
-                                                            </div>
-                                                            <div className='flex flex-row items-start'>
-                                                                <span className='text-[#ec05ad] mr-2'>≈${userCoinPrice.toFixed(2)} USD</span>
+                                                                <span className='text-[#ec05ad] ml-2'>≈${userCoinPrice.toFixed(2)} USD</span>
                                                             </div>
                                                         </div>
                                                     </a>

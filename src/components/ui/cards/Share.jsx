@@ -39,6 +39,22 @@ const ShareCard = ({ rootRef, post }) => {
         });
     }
 
+    const dontSave = () => {
+        toast.warning('Oops! Sorry, This NFT is on Sale', {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            pauseOnFocusLoss: false,
+            draggable: false,
+            closeButton: false,
+            progress: undefined,
+            theme: "dark",
+            icon: false
+        });
+    }
+
     const saveIt = async (post, user) => {
         console.log('save it')
         toast.warning('Save is no enabled!', {
@@ -76,9 +92,15 @@ const ShareCard = ({ rootRef, post }) => {
                         </div>
                         <div className='options mr-4'>
                             <Tooltip content={"Download Image"} rounded color="invert" placement="bottom">
-                                <button onClick={() => exportPNG({ rootRef })} className='hover:bg-black hover:text-white bg-gray-100 duration-75 delay-75 w-12 h-12 flex justify-center items-center text-center rounded-full'>
-                                    <HiOutlineDownload size={30} />
-                                </button>
+                                {(post.IsNFT && post.NumNFTCopiesForSale > 0) ?
+                                    <button onClick={() => dontSave()} className='hover:bg-black hover:text-white bg-gray-100 duration-75 delay-75 w-12 h-12 flex justify-center items-center text-center rounded-full'>
+                                        <HiOutlineDownload size={30} />
+                                    </button>
+                                    :
+                                    <button onClick={() => exportPNG({ rootRef })} className='hover:bg-black hover:text-white bg-gray-100 duration-75 delay-75 w-12 h-12 flex justify-center items-center text-center rounded-full'>
+                                        <HiOutlineDownload size={30} />
+                                    </button>
+                                }
                             </Tooltip>
                         </div>
                         <div className='share mr-4'>

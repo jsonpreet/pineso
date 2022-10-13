@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { Post } from '@components/post';
 import Head from 'next/head';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import { toast } from 'react-toastify';
 
 const ProfilePage = () => {
     const router = useRouter();

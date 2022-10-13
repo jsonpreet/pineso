@@ -18,7 +18,7 @@ const HotPage = () => {
           <meta property="og:url" content={BASE_URL} />
           <meta property="og:title" content="Pineso" />
           <meta property="og:description" content="Build with Deso Blockchain" />
-          <meta property="og:image" content={`${BASE_URL}/images/icons/icon-512x512.png`} />
+          <meta property="og:image" content={`${BASE_URL}/meta.png`} />
       </Head>
       <Layout>
         <Suspense fallback={<LoadingLoader/>}>

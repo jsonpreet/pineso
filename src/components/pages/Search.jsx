@@ -220,18 +220,25 @@ const SearchPage = () => {
                                     <div className="flex flex-col justify-center items-center pb-2 pt-4">
                                         <div className={`grid grid-cols-2 gap-4 mb-4 w-full`}>
                                             {feedFetched && feed?.length > 0 && feed.map((post, index) => {
-                                                const link = post?.tag?.Hashtag.replace(/(#(?:[^\x00-\x7F]|\w)+)/g, (hashtags) => {
-                                                    return hashtags.substring(1).toLowerCase()
-                                                })
-                                                const bgImage = post?.ImageURLs[0]
-                                                return (
-                                                    <Link href={`/hashtag/${link}`} key={post?.tag?.Hashtag}>
-                                                        <a style={{ backgroundImage: `url(${bgImage})`}} className={`bg-cover bg-no-repeat bg-center group relative flex flex-col items-center justify-center w-50 h-24 text-sm px-4 rounded-xl duration-75 delay-75 bg-black text-white hover:bg-[#5634ee]'} font-semibold shadow-xl`}>
-                                                            <span className='text-white font-semibold z-10 relative'>{post?.tag?.Hashtag}</span>
-                                                            <div className='bg-black/50 group-hover:bg-black/50 absolute rounded-xl left-0 right-0 w-full h-full duration-75 delay-75'></div>
-                                                        </a>
-                                                    </Link>
-                                                )
+                                                if (post?.tag?.Hashtag !== undefined) {
+                                                    <a target="_blank" rel="noreferrer" href="https://twitter.com/AppPineso" style={{ backgroundImage: `url(/twitter.webp)`}} className={`bg-cover bg-no-repeat bg-center group relative flex flex-col items-center justify-center w-50 h-24 text-sm px-4 rounded-xl duration-75 delay-75 bg-black text-white hover:bg-[#5634ee]'} font-semibold shadow-xl`}>
+                                                        <span className='text-white font-semibold text-lg z-10 relative'>#pineso</span>
+                                                        <div className='bg-black/40 group-hover:bg-black/50 absolute rounded-xl left-0 right-0 w-full h-full duration-75 delay-75'></div>
+                                                    </a>
+                                                } else {
+                                                    const link = post?.tag?.Hashtag.replace(/(#(?:[^\x00-\x7F]|\w)+)/g, (hashtags) => {
+                                                        return hashtags.substring(1).toLowerCase()
+                                                    })
+                                                    const bgImage = post?.ImageURLs[0]
+                                                    return (
+                                                        <Link href={`/hashtag/${link}`} key={index}>
+                                                            <a style={{ backgroundImage: `url(${bgImage})`}} className={`bg-cover bg-no-repeat bg-center group relative flex flex-col items-center justify-center w-50 h-24 text-sm px-4 rounded-xl duration-75 delay-75 bg-black text-white hover:bg-[#5634ee]'} font-semibold shadow-xl`}>
+                                                                <span className='text-white font-semibold text-lg z-10 relative'>{post?.tag?.Hashtag}</span>
+                                                                <div className='bg-black/40 group-hover:bg-black/50 absolute rounded-xl left-0 right-0 w-full h-full duration-75 delay-75'></div>
+                                                            </a>
+                                                        </Link>
+                                                    )
+                                                }
                                             })}
                                             {feedLoading && <Loader className={`h-7 w-7 text-[#ec05ad]`}/>}
                                         </div>

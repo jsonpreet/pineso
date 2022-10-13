@@ -46,7 +46,7 @@ const ProfilePage = () => {
 
     const onFollow = () => {
         
-        toast.warning('Follow is no enabled!', {
+        toast.warning('Follow is not enabled!', {
             position: "bottom-center",
             autoClose: 3000,
             hideProgressBar: true,

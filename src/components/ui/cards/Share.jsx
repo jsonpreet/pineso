@@ -24,7 +24,7 @@ const ShareCard = ({ rootRef, post }) => {
     const user = useApp((state) => state.user)
     const copied = () => {
         setIsCopied(true);
-        toast.success('Copied link to your clipboard to share', {
+        toast.success('Copied! link to your clipboard to share', {
             position: "bottom-center",
             autoClose: 3000,
             hideProgressBar: true,
@@ -57,7 +57,7 @@ const ShareCard = ({ rootRef, post }) => {
 
     const saveIt = async (post, user) => {
         console.log('save it')
-        toast.warning('Save is no enabled!', {
+        toast.warning('Save is not enabled!', {
             position: "bottom-center",
             autoClose: 3000,
             hideProgressBar: true,

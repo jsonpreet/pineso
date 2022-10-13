@@ -21,6 +21,12 @@ const TrendingTags = ({ isSingle, isSearch }) => {
             <div>
                 <div className={`grid grid-cols-2 lg:grid-cols-5 ${isSearch ? `gap-2`: `gap-5`} p-2 mb-4 w-full`}>
                     {feed?.length > 0 && feed.map((post, index) => {
+                        if (post?.tag?.Hashtag !== undefined) {
+                            <a target="_blank" rel="noreferrer" href="https://twitter.com/AppPineso" style={{ backgroundImage: `url(/twitter.webp)`}} className={`bg-cover bg-no-repeat bg-center group relative flex flex-col items-center justify-center w-50 h-24 text-sm px-4 rounded-xl duration-75 delay-75 bg-black text-white hover:bg-[#5634ee]'} font-semibold shadow-xl`}>
+                                <span className='text-white font-semibold text-lg z-10 relative'>#pineso</span>
+                                <div className='bg-black/40 group-hover:bg-black/50 absolute rounded-xl left-0 right-0 w-full h-full duration-75 delay-75'></div>
+                            </a>
+                        }
                         const link = post?.tag?.Hashtag.replace(/(#(?:[^\x00-\x7F]|\w)+)/g, (hashtags) => {
                             return hashtags.substring(1).toLowerCase()
                         })

@@ -15,7 +15,7 @@ import { useDetectClickOutside } from 'react-detect-click-outside';
 import { Loader } from "@components/loader";
 import Image from "next/image";
 import { IoChevronDownCircleOutline, IoDiamondOutline } from "react-icons/io5";
-import { BsArrowRightShort, BsFileArrowDown, BsPatchCheckFill, BsPatchQuestionFill, BsQuestion } from "react-icons/bs";
+import { BsArrowRightShort, BsFileArrowDown, BsGlobe, BsPatchCheckFill, BsPatchQuestionFill, BsQuestion } from "react-icons/bs";
 import { BiExit, BiSearch } from "react-icons/bi";
 import { HiHome, HiOutlineUserCircle, HiSearch } from 'react-icons/hi'
 import { FaTimes, FaTwitter } from "react-icons/fa";
@@ -400,8 +400,8 @@ const Header = () => {
                                             </Menu.Item>
                                             <Menu.Item>
                                                 <a href='https://diamondapp.com/u/Pineso' rel="noreferrer" target='_blank' className='flex flex-row items-center duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
-                                                    <IoDiamondOutline className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
-                                                    <span>Diamond</span>
+                                                    <BsGlobe className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
+                                                    <span>DeSocialWorld</span>
                                                 </a>
                                             </Menu.Item>
                                         </div>
@@ -474,9 +474,9 @@ const Header = () => {
                                             <FaTwitter className='mr-1 text-[#1da1f2]' size={17} />
                                             <span>Twitter</span>
                                         </a>
-                                        <a href='https://diamondapp.com/u/Pineso' rel="noreferrer" target='_blank' className='flex flex-row duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
-                                            <IoDiamondOutline className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
-                                            <span>Diamond</span>
+                                        <a href='https://desocialworld.com/u/Pineso' rel="noreferrer" target='_blank' className='flex flex-row duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                            <BsGlobe className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
+                                            <span>DeSocialWorld</span>
                                         </a>
                                         {/* <Link href='/about' passHref>
                                             <a className="flex flex-row duration-75 delay-75 hover:text-pink-600 hover:bg-gray-100 cursor-pointer px-4 py-2">

@@ -14,6 +14,7 @@ import { FacebookShareButton, FacebookIcon, RedditShareButton, RedditIcon, Teleg
 import { Tooltip } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import { toastOptions } from '@app/lib/utils';
 
 const ShareCard = ({ rootRef, post }) => {
     const router = useRouter()
@@ -24,52 +25,16 @@ const ShareCard = ({ rootRef, post }) => {
     const user = useApp((state) => state.user)
     const copied = () => {
         setIsCopied(true);
-        toast.success('Copied! link to your clipboard to share', {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            pauseOnFocusLoss: false,
-            draggable: false,
-            closeButton: false,
-            progress: undefined,
-            theme: "dark",
-            icon: false
-        });
+        toast.success('Copied! link to your clipboard to share', toastOptions);
     }
 
     const dontSave = () => {
-        toast.warning('Oops! Sorry, This NFT is on Sale', {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            pauseOnFocusLoss: false,
-            draggable: false,
-            closeButton: false,
-            progress: undefined,
-            theme: "dark",
-            icon: false
-        });
+        toast.warning('Oops! Sorry, This NFT is on Sale', toastOptions);
     }
 
     const saveIt = async (post, user) => {
         console.log('save it')
-        toast.warning('Save is not enabled!', {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            pauseOnFocusLoss: false,
-            draggable: false,
-            closeButton: false,
-            progress: undefined,
-            theme: "dark",
-            icon: false
-        });
+        toast.warning('Save is not enabled!', toastOptions);
         //const response = await savePost(post, user);
     }
 

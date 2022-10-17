@@ -1,4 +1,4 @@
-import { nFormatter } from "@app/lib/utils";
+import { nFormatter, toastOptions } from "@app/lib/utils";
 import useApp from "@app/stores/store";
 import Link from "next/link";
 import UserImage from "@components/ui/UserImage";
@@ -28,19 +28,7 @@ const ProfileCard = ({ profile }) => {
 
     const onFollow = () => {
         
-        toast.warning('Follow is not enabled!', {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            pauseOnFocusLoss: false,
-            draggable: false,
-            closeButton: false,
-            progress: undefined,
-            theme: "dark",
-            icon: false
-        });
+        toast.warning('Follow is not enabled!', toastOptions);
     }
 
     return (

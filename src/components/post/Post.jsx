@@ -18,12 +18,11 @@ const Post = ({post, scrollPosition}) => {
             <motion.div
                 ref={pinRef}
                 className={`bg-white rounded-xl mb-4 overflow-hidden relative flex flex-col items-center justify-center ${loading ? `h-[300px]` : ``} `}
-                initial={{ opacity: 0.4 }}
+                initial={{ opacity: 0.5 }}
                 animate={{ opacity: 1 }}
                 transition={{
                     default: {
-                        duration: 1.5,
-                        ease: [0, 0.71, 0.2, 1.01]
+                        duration: 1.5
                     },
                 }}
             >

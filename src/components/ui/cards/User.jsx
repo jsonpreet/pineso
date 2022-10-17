@@ -1,32 +1,76 @@
-import { nFormatter } from "@app/lib/utils";
+import { nFormatter, toastOptions } from "@app/lib/utils";
 import useApp from "@app/stores/store";
 import Link from "next/link";
 import UserImage from "@components/ui/UserImage";
 import { toast } from "react-toastify";
 import { BsPatchCheckFill } from "react-icons/bs";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import Deso from "deso-protocol";
+import { Loader } from "@app/components/loader";
 
 const UserCard = ({ follows, profile, user, isFollowing }) => {
+    
+    const [follow, setFollow] = useState(false)
+    const [loading, setLoader] = useState(false)
+    const [deso, setDeso] = useState()
     const isLoggedIn = useApp((state) => state.isLoggedIn)
 
     const profileID = profile?.PublicKeyBase58Check;
     const userID = user?.PublicKeyBase58Check;
 
-    const onFollow = () => {
-        
-        toast.warning('Follow is no enabled!', {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            pauseOnFocusLoss: false,
-            draggable: false,
-            closeButton: false,
-            progress: undefined,
-            theme: "dark",
-            icon: false
-        });
+    useEffect(() => {
+        const deso = new Deso();
+        if (deso) {
+            setDeso(deso);
+        }
+    }, [])
+
+    useEffect(() => {
+        if (isFollowing) {
+            setFollow(true)
+        } else {
+            setFollow(false)
+        }
+    }, [isFollowing])
+
+     const onFollow = async() => {
+        if (!isLoggedIn) {
+            toast.error('Please login to follow this user', toastOptions);
+        } else {
+            setLoader(true)
+            if (isFollowing) {
+                const request = {
+                    "IsUnfollow": true,
+                    "FollowedPublicKeyBase58Check": profileID,
+                    "FollowerPublicKeyBase58Check": userID
+                };
+                const response = await deso.social.createFollowTxnStateless(request);
+                if (response && response.TxnHashHex !== undefined) {
+                    setLoader(false)
+                    setFollow(false)
+                    toast.success('Unfollowed successfully', toastOptions);
+                } else {
+                    setLoader(false)
+                    toast.error('Something went wrong', toastOptions);
+                }
+            } else {
+                const request = {
+                    "IsUnfollow": false,
+                    "FollowedPublicKeyBase58Check": profileID,
+                    "FollowerPublicKeyBase58Check": userID
+                };
+                const response = await deso.social.createFollowTxnStateless(request);
+                if(response && response.TxnHashHex !== undefined) {
+                    setLoader(false)
+                    setFollow(true)
+                    toast.success('Followed successfully', toastOptions);
+                } else {
+                    setLoader(false)
+                    toast.error('Something went wrong', toastOptions);
+                }
+            }
+        }
     }
 
     return (
@@ -62,9 +106,9 @@ const UserCard = ({ follows, profile, user, isFollowing }) => {
             </div>
             <div className='follow -mt-2'>
                 {(isLoggedIn && userID !== profileID) ?
-                    (isFollowing) ?
-                        <button onClick={() => onFollow()} className='bg-[#ec05ad] hover:bg-[#5634ee] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button> :
-                        <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-gray-200 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
+                    (follow) ?
+                        <button onClick={() => onFollow()} className='bg-[#ec05ad] hover:bg-[#5634ee] text-white duration-75 delay-75 rounded-full px-4 py-1'>{loading ? <Loader className='w-4 h-4' /> : `Following`}</button> :
+                        <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-gray-200 duration-75 delay-75 text-black rounded-full px-4 py-1'>{loading ? <Loader className='w-4 h-4' /> : `Follow`}</button>
                     :
                     (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#ec05ad] hover:text-white bg-gray-200 duration-75 delay-75 text-black rounded-full px-4 py-1'>Follow</button>
                 }

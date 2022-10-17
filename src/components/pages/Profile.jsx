@@ -1,5 +1,5 @@
 import UserImage from '@app/components/ui/UserImage';
-import { nFormatter, withCSR } from '@app/lib/utils';
+import { nFormatter, toastOptions, withCSR } from '@app/lib/utils';
 import useApp from '@app/stores/store';
 import { useRouter } from 'next/router';
 import { ErrorLoader, Loader, LoadingLoader } from '@components/loader';
@@ -12,19 +12,23 @@ import { getFollowings, getFollows, getIsFollowing, FetchExchangeRate, FetchSing
 import { useQuery } from '@tanstack/react-query';
 import { BASE_URL, EXTERNAL_LINK } from '@app/lib/constants';
 import { IoDiamondOutline } from 'react-icons/io5';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Post } from '@components/post';
 import Head from 'next/head';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import { toast } from 'react-toastify';
+import Deso from 'deso-protocol';
 
 const ProfilePage = () => {
     const router = useRouter();
     if (!router) return null
     const username = router.query.profile;
-    const [active, setActive] = useState({ feed : true, saved : false})
+    const [active, setActive] = useState({ feed: true, saved: false })
+    const [deso, setDeso] = useState()
     const isLoggedIn = useApp((state) => state.isLoggedIn)
     const user = useApp((state) => state.user)
+    const [follow, setFollow] = useState(false)
+    const [loading, setLoader] = useState(false)
 
     const { data: profile, isLoading: profileLoading, isFetching, isFetched: profileFetched, error, isError } = FetchSingleProfilebyUsername({ username: username });
     const { data: exchange } = FetchExchangeRate();
@@ -42,23 +46,60 @@ const ProfilePage = () => {
 
     const exchangeRate = exchange?.USDCentsPerDeSoExchangeRate/100
 
-    const userCoinPrice = (profile?.DESOBalanceNanos / 1000000000) * exchangeRate;
+    const userCoinPrice = (profile?.CoinPriceDeSoNanos / 1000000000) * exchangeRate;
 
-    const onFollow = () => {
-        
-        toast.warning('Follow is not enabled!', {
-            position: "bottom-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            pauseOnFocusLoss: false,
-            draggable: false,
-            closeButton: false,
-            progress: undefined,
-            theme: "dark",
-            icon: false
-        });
+    useEffect(() => {
+        const deso = new Deso();
+        if (deso) {
+            setDeso(deso);
+        }
+    }, [])
+
+    useEffect(() => {
+        if (isFollowing) {
+            setFollow(true)
+        } else {
+            setFollow(false)
+        }
+    }, [isFollowing])
+
+    const onFollow = async() => {
+        if (!isLoggedIn) {
+            toast.error('Please login to follow this user', toastOptions);
+        } else {
+            setLoader(true)
+            if (isFollowing) {
+                const request = {
+                    "IsUnfollow": true,
+                    "FollowedPublicKeyBase58Check": profileID,
+                    "FollowerPublicKeyBase58Check": userID
+                };
+                const response = await deso.social.createFollowTxnStateless(request);
+                if (response && response.TxnHashHex !== undefined) {
+                    setLoader(false)
+                    setFollow(false)
+                    toast.success('Unfollowed successfully', toastOptions);
+                } else {
+                    setLoader(false)
+                    toast.error('Something went wrong', toastOptions);
+                }
+            } else {
+                const request = {
+                    "IsUnfollow": false,
+                    "FollowedPublicKeyBase58Check": profileID,
+                    "FollowerPublicKeyBase58Check": userID
+                };
+                const response = await deso.social.createFollowTxnStateless(request);
+                if(response && response.TxnHashHex !== undefined) {
+                    setLoader(false)
+                    setFollow(true)
+                    toast.success('Followed successfully', toastOptions);
+                } else {
+                    setLoader(false)
+                    toast.error('Something went wrong', toastOptions);
+                }
+            }
+        }
     }
 
     const feedTab = () => {
@@ -94,7 +135,12 @@ const ProfilePage = () => {
                 <div className='py-12 flex relative flex-col items-center justify-center'>
                     <BrowserView>
                         <div className='z-10 w-full flex flex-row items-start justify-start max-w-[600px]'>
-                            <UserImage classes={'shadow-lg w-40 h-40 border border-gray-200'} username={profile?.Username} profile={profile} />
+                            {/* <UserImage classes={'shadow-lg min-w-40 max-h-40 border border-gray-200'} username={profile?.Username} profile={profile} /> */}
+                            <img
+                                className={`rounded-full shadow-lg min-w-40 max-h-40 border border-gray-200`}
+                                alt={`${username}'s profile picture`}
+                                src={profile?.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${profile?.PublicKeyBase58Check}`}
+                            />
                             <div className='flex flex-col ml-4 flex-auto'>
                                 <div className='flex flex-row items-start'>
                                     <div className='flex-auto flex flex-row items-center'>
@@ -104,10 +150,10 @@ const ProfilePage = () => {
                                     <div className=''>
                                         {(isLoggedIn && userID !== profileID) ?
                                         
-                                            (isFollowing) ?
-                                                <button onClick={() => onFollow()} className='bg-[#5634ee] hover:bg-[#ec05ad] text-white duration-75 delay-75 rounded-full px-4 py-1'>Following</button>
+                                            (follow) ?
+                                                <button onClick={() => onFollow()} className='bg-[#5634ee] hover:bg-[#ec05ad] text-white duration-75 delay-75 rounded-full px-4 py-1'>{loading ? <Loader className='w-4 h-4'/> : `Following`}</button>
                                                 :
-                                                <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
+                                                <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>{loading ? <Loader className='w-4 h-4' /> : `Follow`}</button>
                                             :
                                             (userID !== profileID) && <button onClick={() => onFollow()} className='hover:bg-[#5634ee] hover:text-white bg-[#ec05ad] duration-75 delay-75 text-white rounded-full px-4 py-1'>Follow</button>
                                         }

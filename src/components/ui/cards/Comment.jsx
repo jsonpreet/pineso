@@ -7,10 +7,23 @@ import "linkify-plugin-hashtag";
 import "linkify-plugin-mention";
 import { LinkifyOptions } from "@app/lib/utils";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 
 const CommentCard = ({ isSub, comment, profile}) => {
     const comments = comment.Comments
+    
+    const [readMore, setReadMore] = useState(false)
+
+    useEffect(() => {
+        if (comment) {
+            checkLength();
+        }
+    }, [comment])
+
+    const checkLength = () => {
+        (comment.Body.length > comment.Body.substring(0, 100).length) ? setReadMore(false) : setReadMore(true)
+    }
     return (
         <div className={`flex my-4 flex-col ${isSub ? `sub-comment` : ''}`}>
             <div className='flex flex-row'>
@@ -42,19 +55,25 @@ const CommentCard = ({ isSub, comment, profile}) => {
                     <div className='block'>
                         <span className='text-black break-all whitespace-pre-wrap'>
                             <Linkify options={LinkifyOptions}>
-                                {comment.Body}
+                                {readMore ? comment.Body : `${comment.Body.substring(0, 100)}...`}
                             </Linkify>
+                            {!readMore &&
+                                <button className='ml-1 font-semibold hover:underline' onClick={() => setReadMore(true)}>
+                                    Read More
+                                </button>
+                            }
                         </span>
                     </div>
                     <CommentMeta post={comment} />
                 </div>
             </div>
-            {comments?.map((reply, index) => {
+            {/* {comments?.map((reply, index) => {
                 const profile = reply.ProfileEntryResponse;
                 return (
                     <CommentCard isSub={true} key={index} comment={reply} profile={profile} />
                 )
-            })}
+            })} */}
+            
         </div>
     )
 }

@@ -245,7 +245,9 @@ const Header = () => {
                                                             <div className="flex flex-row items-start">
                                                                 <span className="mr-1 text-black font-semibold duration-75 delay-75 hover:text-[#ec05ad] leading-none">{search.Username}</span>
                                                                 {search.IsVerified && <span><BsPatchCheckFill className="text-[#ec05ad]" size={16} /></span>}
-                                                                <span className='text-[#ec05ad] ml-2'>≈${userCoinPrice.toFixed(2)} USD</span>
+                                                            </div>
+                                                            <div className="flex flex-row items-start">
+                                                                <span className='text-[#ec05ad]'>≈${userCoinPrice.toFixed(2)} USD</span>
                                                             </div>
                                                         </div>
                                                     </a>
@@ -404,7 +406,7 @@ const Header = () => {
                                                 </a>
                                             </Menu.Item>
                                             <Menu.Item>
-                                                <a href='https://diamondapp.com/u/Pineso' rel="noreferrer" target='_blank' className='flex flex-row items-center duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
+                                                <a href='https://desocialworld.com/u/Pineso' rel="noreferrer" target='_blank' className='flex flex-row items-center duration-75 group delay-75 hover:bg-gray-100 cursor-pointer px-4 py-2'>
                                                     <BsGlobe className='text-blue-500 mr-1 duration-75 delay-75' size={17} />
                                                     <span>DeSocialWorld</span>
                                                 </a>

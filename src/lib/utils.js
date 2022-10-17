@@ -90,3 +90,16 @@ export const LinkifyOptions = {
 export const removeDuplicates = (arr) => {
     return arr.filter((item, index) => arr.indexOf(item) === index);
 }
+
+export const toastOptions = {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    pauseOnFocusLoss: false,
+    draggable: false,
+    closeButton: false,
+    progress: undefined,
+    theme: "dark",
+}

@@ -9,7 +9,7 @@ export const config = {
     defaultOptions: {
         queries: {
             staleTime: 60 * 5 * 1000,
-            cacheTime: 120 * 5 * 1000,
+            cacheTime: 0,
             refetchOnWindowFocus: false,
             refetchInterval: 60 * 5 * 1000,
         }

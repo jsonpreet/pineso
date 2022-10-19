@@ -46,8 +46,10 @@ const Follow = ({user, profile}) => {
                 toast.error(response.message, toastOptions);
                 return;
             } else {
-                setFollow(response.isFollowing);
+                setFollow(response.data.IsFollowing);
             }
+        } else {
+            setFollow(false);
         }
     }
 

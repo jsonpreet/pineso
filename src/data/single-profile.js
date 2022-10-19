@@ -21,19 +21,24 @@ export const getSingleProfile = async (publicKey) => {
 export const getSingleProfilebyUsername = async ({ queryKey }) => {
     const [_key, { username }] = queryKey;
     const endpoint = 'get-single-profile';
+    // if (username !== undefined && username !== null) {
+        
+    // } else {
+    //     return null
+    // }
+
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         Username: username
     });
-    if (response === null) {
+    if (response.status !== 200) {
         return null
     } else {
         return response.data.Profile;
     }
+    
 
 }
 
 export const FetchSingleProfilebyUsername = ({username}) => {
-    return useQuery([['single-profile', username], { username }], getSingleProfilebyUsername, {
-        keepPreviousData: true,
-    });
+    return useQuery([['single-profile', username], { username }], getSingleProfilebyUsername);
 }

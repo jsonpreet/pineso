@@ -4,6 +4,7 @@ import { withCSR } from '@lib/utils'
 import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
 import { useRouter } from 'next/router';
+import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
 const TagPage = () => {
     const router = useRouter();
@@ -23,11 +24,19 @@ const TagPage = () => {
     if (isFetched) {
         return (
             <>
-                <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
+                {/* <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
                     {posts?.length > 0 && posts.map((post, index) => {
                         return <Post post={post} key={index} />
                     })}
-                </div>
+                </div> */}
+                
+                <ResponsiveMasonry columnsCountBreakPoints={{350: 2, 750: 3, 900: 7}}>
+                    <Masonry gutter='10px'>
+                        {posts?.length > 0 && posts.map((post, index) => {
+                            return <Post post={post} key={index} />
+                        })}
+                    </Masonry>
+                </ResponsiveMasonry>
             </>
         )
     }

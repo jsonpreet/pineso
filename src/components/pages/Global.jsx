@@ -2,9 +2,9 @@ import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { getGlobalFeed, FetchGlobalFeed } from '@app/data'
 import { withCSR } from '@lib/utils'
 import { config } from '@app/lib/constants'
-import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
 import useApp from '@app/stores/store'
+import Grid from '@components/ui/Grid'
 
 const GlobalPage = () => {
     const user = useApp((state) => state.user)
@@ -23,11 +23,12 @@ const GlobalPage = () => {
     if (isFetched) {
         return (
             <>
-                <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
+                {/* <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
                     {posts?.length > 0 && posts.map((post, index) => {
                         return <Post post={post} key={index} />
                     })}
-                </div>
+                </div> */}
+                <Grid posts={posts} />
             </>
         )
     }

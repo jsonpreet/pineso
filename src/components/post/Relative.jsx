@@ -1,6 +1,6 @@
 import { FetchLatestFeed } from '@app/data'
-import { Post } from '@components/post'
 import { Loader, FetchingLoader, LoadingLoader, ErrorLoader } from '@components/loader'
+import Grid from '@components/ui/Grid';
 
 const RelativePosts = ({ parent }) => {
     const { data: posts, isLoading, isFetching, isFetched, error, isError } = FetchLatestFeed({ limit: 50, parent: parent });
@@ -22,11 +22,14 @@ const RelativePosts = ({ parent }) => {
                         <Loader className={`h-7 w-7 text-[#ec05ad]`} />
                     </div>
                 }
-                <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
+                {/* <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
                     {isFetched && posts?.length > 0 && posts.map((post, index) => {
                         return <Post post={post} key={index} />
                     })}
-                </div>
+                </div> */}
+                {isFetched && posts?.length > 0 &&
+                    <Grid posts={posts} />
+                }
             </div>
         </>
     )

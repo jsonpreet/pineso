@@ -39,6 +39,23 @@ textarea, input, select {
     background-color: #fff;
 }
 
+// .masonry{
+// 	display: flex;
+// 	flex-direction: row;
+// 	justify-content: center;
+// 	align-content: stretch;
+// 	width: 100%;
+// 	margin: auto;
+// }
+// .column{
+// 	display: flex;
+// 	flex-direction: column;
+// 	justify-content: flex-start;
+// 	align-content: stretch;
+// 	flex-grow: 1;
+//     gap: 10px;
+// }
+
 @media screen and (max-width: 480px) {
     .sm\:columns-3 {
         columns: 2;

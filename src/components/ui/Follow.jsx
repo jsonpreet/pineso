@@ -1,5 +1,6 @@
 
 import { toast } from 'react-toastify';
+import { toastOptions} from '@app/lib/utils';
 import Deso from 'deso-protocol';
 import {Loader } from '@components/loader';
 import { useEffect, useState } from 'react';

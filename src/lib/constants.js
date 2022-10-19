@@ -8,10 +8,9 @@ export const FEEDER_PROJECT_ID = process.env.NEXT_PUBLIC_FEEDER_PROJECT_ID || '6
 export const config = {
     defaultOptions: {
         queries: {
-            staleTime: 60 * 5 * 1000,
+            staleTime: 60 * 2 * 1000,
             cacheTime: 0,
-            refetchOnWindowFocus: false,
-            refetchInterval: 60 * 5 * 1000,
+            refetchOnWindowFocus: true,
         }
     }
 }

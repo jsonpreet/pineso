@@ -15,32 +15,48 @@ const Follow = ({user, profile}) => {
     const [follow, setFollow] = useState(false)
     const [loading, setLoader] = useState(false)
 
-    const profileID = profile?.PublicKeyBase58Check || null;
-    const userID = user?.profile?.PublicKeyBase58Check || null;
+    const profileID = profile.PublicKeyBase58Check;
+    const userID = user.profile.PublicKeyBase58Check;
 
 
-    const { data: isFollowing, isFetched, isLoading } = useQuery([['is-following', `${userID}-${profileID}`], { publicKey: userID, followingKey: profileID }], getIsFollowing, { enabled: !!profileID, })
+    // const isFollowing = getIsFollowing(userID, profileID);
+    // console.log(isFollowing);
     useEffect(() => {
         const deso = new Deso();
         if (deso) {
             setDeso(deso);
+            checkFollowing();
         }
     }, [])
 
     useEffect(() => {
-        if (isFollowing) {
-            setFollow(true)
-        } else {
-            setFollow(false)
+        if (deso) {
+            checkFollowing();
         }
-    }, [isFollowing])
+    }, [deso])
+
+    const checkFollowing = async () => {
+        const request = {
+            "PublicKeyBase58Check": userID,
+            "IsFollowingPublicKeyBase58Check": profileID
+        };
+        if (deso && isLoggedIn) {
+            const response = await deso.social.isFollowingPublicKey(request);
+            if (response.status !== 200) {
+                toast.error(response.message, toastOptions);
+                return;
+            } else {
+                setFollow(response.isFollowing);
+            }
+        }
+    }
 
     const onFollow = async() => {
         if (!isLoggedIn) {
             toast.error('Please login to follow this user', toastOptions);
         } else {
             setLoader(true)
-            if (isFollowing) {
+            if (follow) {
                 const request = {
                     "IsUnfollow": true,
                     "FollowedPublicKeyBase58Check": profileID,
@@ -73,10 +89,7 @@ const Follow = ({user, profile}) => {
             }
         }
     }
-    if (isLoading) {
-        return ( <Loader className='w-4 h-4'/> )
-    }
-    if (isFetched) {
+    
         return (
             <>
                 {(isLoggedIn && userID !== profileID) ?
@@ -89,7 +102,6 @@ const Follow = ({user, profile}) => {
                 }
             </>
         )
-    }
 }
 
 export default Follow

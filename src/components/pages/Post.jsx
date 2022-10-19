@@ -50,27 +50,16 @@ const PostPage = () => {
 
     const profileID = post?.ProfileEntryResponse.PublicKeyBase58Check;
     const userID = user?.profile?.PublicKeyBase58Check;
-    // const { data: following, isLoading: followingLoading, isFetched: followingFetched } = FetchIsFollowing({ publicKey: user.publicKeyBase58Check, followingKey: post.ProfileEntryResponse.PublicKeyBase58Check });
-    // Then get the user's projects
-    const { status: followingStatus, fetchStatus: followingFetchStatus, data: isFollowing } = useQuery([['is-following', `${userID}-${profileID}`], { publicKey: userID, followingKey: profileID }], getIsFollowing, { enabled: !!userID, })
 
+    // Then get the user's projects
     const { status: followsStatus, fetchStatus: followsFetchStatus, data: follows } = useQuery([['follows', profileID], { publicKey: profileID }], getFollows, { enabled: !!profileID, })
-    
-    // const { data: numOfFollows, isLoading: followsLoading, isFetched: followsFetched } = FetchFollows({ publicKey: post.ProfileEntryResponse.PublicKeyBase58Check });
 
     if (isError) {
         return ( <ErrorLoader error={error}/>  )
     }
-    if (!isLoggedIn && (isLoading || followsStatus === 'loading')) { 
+    if ((isLoading || followsStatus === 'loading')) { 
         return ( <LoadingLoader message='Loading Pin for you.'/> )
     }
-    if (isLoggedIn && (isLoading || followingStatus === 'loading' || followsStatus === 'loading')) { 
-        return ( <LoadingLoader message='Loading Pin for you.'/> )
-    }
-    
-    // if (isFetching) {
-    //     return ( <FetchingLoader /> )
-    // }
 
     const Output = () => {
         return (
@@ -110,7 +99,7 @@ const PostPage = () => {
                                 </div>  
                                 <div className='content flex flex-col w-full lg:w-2/4 pt-8 pb-4 px-8'>
                                     <ShareCard rootRef={rootRef} post={post} />
-                                    <UserCard user={user.profile} profile={post.ProfileEntryResponse} follows={follows} isFollowing={isFollowing} />
+                                    <UserCard user={user} profile={post.ProfileEntryResponse} follows={follows} />
                                     <div className='mt-4 break-words body'>
                                         <Linkify options={LinkifyOptions}>
                                             {!readMore ? post.Body : `${post.Body.substring(0, 300)}...`}
@@ -138,11 +127,7 @@ const PostPage = () => {
         )
     }
 
-    if (isLoggedIn && isFetched && followsStatus === 'success' && followingStatus === 'success') {
-        return <Output />
-    }
-
-    if (!isLoggedIn && isFetched && followsStatus === 'success') {
+    if (isFetched && followsStatus === 'success') {
         return <Output />
     }
 }

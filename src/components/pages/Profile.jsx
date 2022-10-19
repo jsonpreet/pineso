@@ -18,6 +18,7 @@ import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detec
 import Grid from '@components/ui/Grid';
 import Follow from '@components/ui/Follow';
 
+
 const ProfilePage = (props) => {
     const router = useRouter();
     if (!router) return null

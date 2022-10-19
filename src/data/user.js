@@ -3,6 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 import { getImageSize } from "@app/lib/utils";
 import axios from "axios";
 
+// export const getIsFollowing = async (publicKey, followingKey) => {
+//     //const [_key, { publicKey, followingKey }] = queryKey;
+//     const endpoint = 'is-following-public-key';
+//     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
+//         PublicKeyBase58Check: publicKey,
+//         IsFollowingPublicKeyBase58Check: followingKey,
+//     });
+//     if (response.status !== 200) {
+//         return response
+//     } else {
+//         return response.data.IsFollowing
+//     }
+// }
+
 export const getIsFollowing = async ({ queryKey }) => {
     const [_key, { publicKey, followingKey }] = queryKey;
     const pins = [];

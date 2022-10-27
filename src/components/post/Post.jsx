@@ -16,7 +16,6 @@ const Post = ({post, scrollPosition}) => {
     if (!im) {
       return null  
     }
-    console.log(post.PostHashHex, post.ImageURLs)
     return (
         <>
             <div ref={pinRef} className={`bg-white rounded-xl overflow-hidden relative flex flex-col items-center justify-center ${loading ? `h-[300px]` : ``} `}>

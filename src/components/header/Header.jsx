@@ -189,7 +189,7 @@ const Header = () => {
                         
                 }
                 <div className={` ${(showSuggestions || showResults) ? `visible` : `hidden`} fixed left-0 top-0 w-full h-screen bg-black/70 z-10`} />
-                <div className={`header-section flex fixed z-40 top-0 left-0 w-full flex-row h-[70px] box-border py-2 px-4 bg-white`}>
+                <div className={`header-section flex fixed z-40 top-0 left-0 w-full flex-row h-[70px] box-border py-2 px-4 backdrop-blur-xl bg-white/80`}>
                     <div>
                         <Link href="/" className="cursor-pointer">
                             <a><Logo/></a>

@@ -7,7 +7,7 @@ export const getHotFeed = async () => {
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 300,
+        ResponseLimit: 500,
         FetchSubcomments: true,
         MediaRequired: true,
         SortByNew: true
@@ -18,8 +18,14 @@ export const getHotFeed = async () => {
         const posts = response.data.HotFeedPage;
 
         const filtered = posts.filter(post => {
-            return post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
+            if ((post.ImageURLs !== null && post.ImageURLs.length > 0 && post.ImageURLs[0].URL !== '') || (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0].URL !== '')) {
+                return post
+            }
         });
+
+        // const filtered2 = posts.filter(post => {
+        //     return post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0].URL !== '';
+        // });
 
         // filtered.map(async (post) => {
         //     getImageSize(post.ImageURLs[0]).then(({ width, height }) => {
@@ -27,7 +33,7 @@ export const getHotFeed = async () => {
         //     })
         // });
 
-        return filtered
+        return filtered;
     }
 }
 

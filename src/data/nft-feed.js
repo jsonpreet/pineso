@@ -14,8 +14,14 @@ export const getNFTFeed = async () => {
         return null
     } else {
         const posts = response.data.HotFeedPage;
+        // const filtered = posts.filter(post => {
+        //     return post.IsNFT === true && post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
+        // });
+
         const filtered = posts.filter(post => {
-            return post.IsNFT === true && post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
+            if (post.IsNFT === true && (post.ImageURLs !== null && post.ImageURLs.length > 0 && post.ImageURLs[0].URL !== '') || (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0].URL !== '')) {
+                return post
+            }
         });
 
         // filtered.map(async (post) => {

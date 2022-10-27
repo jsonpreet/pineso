@@ -55,9 +55,9 @@ const ShareCard = ({ rootRef, post }) => {
                         <div className='flex back mr-4 lg:hidden'>
                             <button className='duration-75 delay-75 hover:text-[#ec05ad] text-gray-400' onClick={() => router.back()}> <BsArrowLeftCircleFill size={48}/> </button>
                         </div>
-                        <div className='options mr-4'>
+                        {/*<div className='options mr-4'>
                             <Tooltip content={"Download Image"} rounded color="invert" placement="bottom">
-                                {(post.IsNFT && post.NumNFTCopiesForSale > 0) ?
+                                 {(post.IsNFT && post.NumNFTCopiesForSale > 0) ?
                                     <button onClick={() => dontSave()} className='hover:bg-black hover:text-white bg-gray-100 duration-75 delay-75 w-12 h-12 flex justify-center items-center text-center rounded-full'>
                                         <HiOutlineDownload size={30} />
                                     </button>
@@ -65,9 +65,9 @@ const ShareCard = ({ rootRef, post }) => {
                                     <button onClick={() => exportPNG({ rootRef })} className='hover:bg-black hover:text-white bg-gray-100 duration-75 delay-75 w-12 h-12 flex justify-center items-center text-center rounded-full'>
                                         <HiOutlineDownload size={30} />
                                     </button>
-                                }
+                                } 
                             </Tooltip>
-                        </div>
+                        </div>*/}
                         <div className='share mr-4'>
                             <Tooltip content={"Share It"} rounded color="invert" placement="bottom">
                                 <button ref={shareRef} onClick={() => setSharePopUpOpen(!sharePopUpOpen)} className='hover:bg-black hover:text-white bg-gray-100 duration-75 delay-75 w-12 h-12 flex justify-center items-center text-center rounded-full'>

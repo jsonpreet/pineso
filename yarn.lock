@@ -490,6 +490,11 @@
   dependencies:
     "@babel/runtime" "^7.6.2"
 
+"@juggle/resize-observer@^3.3.1":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
+  integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
+
 "@loadable/component@^5.15.2":
   version "5.15.2"
   resolved "https://registry.yarnpkg.com/@loadable/component/-/component-5.15.2.tgz#b6c418d592e0a64f16b1d614ca9d3b1443d3b498"
@@ -4014,6 +4019,11 @@ react-responsive-masonry@^2.1.6:
   resolved "https://registry.yarnpkg.com/react-responsive-masonry/-/react-responsive-masonry-2.1.6.tgz#84b3a9e9ba50553b8df8818c79ea2203945d8d63"
   integrity sha512-yERdzOPvdr+eJdqPlRpkTnvCmURYDdwGxaLBjA/noZlrxL3TlxaP98wN0RjYDAG6g6B2f4hhoBZz4Yqi3YbrLg==
 
+react-simple-image-slider@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-simple-image-slider/-/react-simple-image-slider-2.4.1.tgz#ba80e5741b32a531110cb3811ed9f76e3eee88f8"
+  integrity sha512-9T/WjsRThJup43QxzH202rLVNqaUK9P8izTiWOfLcc5w3QygU44a9IQUuIwGYiXtWvw2spRRGLRc5Xd62/vfDg==
+
 react-toastify@^9.0.8:
   version "9.0.8"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.0.8.tgz#3876c89fc6211a29027b3075010b5ec39ebe4f7e"
@@ -4583,6 +4593,13 @@ use-debounce@^8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.4.tgz#27e93b2f010bd0b8ad06e9fc7de891d9ee5d6b8e"
   integrity sha512-fGqsYQzl8kLHF2QpQSgIwgOgJmnh6j5L6SIzQiHdLfwp3q1egUL3btq5Bg2SJysH6A0ILLgT2IqXZKoNJr0nFw==
+
+use-resize-observer@^9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/use-resize-observer/-/use-resize-observer-9.0.2.tgz#25830221933d9b6e931850023305eb9d24379a6b"
+  integrity sha512-JOzsmF3/IDmtjG7OE5qXOP69LEpBpwhpLSiT1XgSr+uFRX0ftJHQnDaP7Xq+uhbljLYkJt67sqsbnyXBjiY8ig==
+  dependencies:
+    "@juggle/resize-observer" "^3.3.1"
 
 use-sync-external-store@1.2.0, use-sync-external-store@^1.2.0:
   version "1.2.0"

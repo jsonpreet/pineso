@@ -27,8 +27,9 @@ const Home = () => {
           <meta property="og:image" content={`${BASE_URL}/meta.png`} />
       </Head>
       <Layout>
-          <Suspense fallback={<LoadingLoader message={`${isLoggedIn ? `Loading Following Pins for you.` : `Loading Hot Pins for you.`}`} />}>
-            {isLoggedIn ? <FrontPage /> : <HotPage />}
+          <Suspense fallback={<LoadingLoader message={`Loading Hot Pins for you.`} />}>
+          {/* {isLoggedIn ? <FrontPage /> : <HotPage />} */}
+          <HotPage />
           </Suspense>
       </Layout>
     </>

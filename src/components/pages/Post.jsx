@@ -20,6 +20,8 @@ import Head from 'next/head';
 import { BASE_URL } from '@app/lib/constants';
 import { BsArrowLeftCircle, BsArrowLeftCircleFill } from 'react-icons/bs';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import SimpleImageSlider from "react-simple-image-slider";
+import useResizeObserver from "use-resize-observer"
 
 const PostPage = () => {
     const router = useRouter();
@@ -29,17 +31,18 @@ const PostPage = () => {
     const isLoggedIn = useApp((state) => state.isLoggedIn)
     const rootRef = useRef();
     const [readMore, setReadMore] = useState(false)
-    const [imageSize, setSize] = useState({ width: 0, height: 0 })
+    const [isImage, setIsImage] = useState(false)
+    const [isVideo, setIsVideo] = useState(false)
     const { data: post, isLoading, isFetching, isFetched, error, isError } = FetchSinglePost({ slug });
-    
 
     useEffect(() => {
         if (post) {
-            const loadSize = async (url) => {
-                const { width, height } = await reactImageSize(url);
-                setSize({width, height});
+            if (post.ImageURLs !== null && post.ImageURLs.length > 0 && post.ImageURLs[0] !== '') {
+                setIsImage(true)
             }
-            loadSize(post.ImageURLs[0])
+            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
+                setIsVideo(true)
+            }
             checkLength();
         }
     }, [post])
@@ -62,6 +65,7 @@ const PostPage = () => {
     }
 
     const Output = () => {
+        const { ref, width = 1, height = 1 } = useResizeObserver();
         return (
             <>
                 <Head>
@@ -70,12 +74,12 @@ const PostPage = () => {
                     <meta property="og:url" content={`${BASE_URL}/pin/${post.PostHashHex}`} />
                     <meta property="og:title" content={`Pin by ${post.ProfileEntryResponse.Username} on Pineso`} />
                     <meta property="og:description" content={post.Body}/>
-                    <meta property="og:image" content={post.ImageURLs[0]}/>
+                    <meta property="og:image" content={isImage ? post.ImageURLs[0] : `${BASE_URL}/meta.png`}/>
                     <meta property="twitter:card" content="summary_large_image" />
                     <meta property="twitter:url" content={`${BASE_URL}/pin/${post.PostHashHex}`} />
                     <meta property="twitter:title" content={`Pin by ${post.ProfileEntryResponse.Username} on Pineso`} />
                     <meta property="twitter:description" content={post.Body}/>
-                    <meta property="twitter:image" content={post.ImageURLs[0]} />
+                    <meta property="twitter:image" content={isImage ? post.ImageURLs[0] : `${BASE_URL}/meta.png`} />
                 </Head>
                 <Layout>
                     <div className='mt-20 sm:mt-0 flex-none'>
@@ -84,17 +88,38 @@ const PostPage = () => {
                                 <button className='absolute top-0 left-0 z-10 duration-75 delay-75 hover:text-[#ec05ad] text-gray-400' onClick={() => router.back()}> <BsArrowLeftCircleFill size={32}/> </button>
                             </div>
                         </BrowserView>
-                        <div ref={rootRef} className='hidden' style={{ width: `1000px`, height: `800px`, backgroundImage: `url(${post.ImageURLs[0]})`}}/>
+                        {isImage && <div ref={rootRef} className='hidden' style={{ width: `1000px`, height: `800px`, backgroundImage: `url(${post.ImageURLs[0]})` }} />}
                         <div className='w-full max-w-[1024px] shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] rounded-3xl mx-auto'>
                             <div className='flex flex-col lg:flex-row overflow-visible'>
-                                <div className='sticky top-0 left-0 z-10 flex-none w-full lg:w-2/4'>
-                                    <div className='image w-full  border border-white/50 h-100 rounded-3xl sm:rounded-bl-3xl sm:rounded-tl-3xl flex flex-col items-center justify-start p-4'>
-                                        <div style={{ backgroundImage: `url(${post.ImageURLs[0]})`, filter: 'blur(3px)', opacity: '.2'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/>    
-                                        <img
-                                            className='rounded-3xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] object-cover'
-                                            alt={`Pin by ${post.ProfileEntryResponse.Username}`}
-                                            src={post.ImageURLs[0]}
-                                            />
+                                <div className='relative top-0 left-0 z-10 flex-none w-full lg:w-2/4'>
+                                    <div ref={ref} className='image w-full border border-white/50 h-full rounded-3xl sm:rounded-bl-3xl sm:rounded-tl-3xl flex flex-col items-center justify-start p-4'>
+                                        {isImage &&
+                                            <>
+                                                <div style={{ backgroundImage: `url(${post.ImageURLs[0]})`, filter: 'blur(3px)', opacity: '.2'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/>    
+                                                
+                                            {post.ImageURLs.length > 1 ?
+                                                <div className='rounded-3xl'>
+                                                    <SimpleImageSlider
+                                                        style={{borderRadius: '1.5rem'}}
+                                                        width={width}
+                                                        height={height}
+                                                        images={post.ImageURLs}
+                                                        showBullets={true}
+                                                        showNavs={true}
+                                                    />
+                                                </div>
+                                                :
+                                                (post.ImageURLs[0] !== '') && <img className='rounded-3xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] object-cover' alt={`Pin by ${post.ProfileEntryResponse.Username}`} src={post.ImageURLs[0]} />
+                                            }
+                                            </>
+                                        }
+                                        {isVideo && 
+                                            <>
+                                                <div className='mt-2 feed-post__video-container bg-black relative pt-[56.25%] w-full rounded-xl h-[700px] max-h-[700px] overflow-hidden'>
+                                                    <iframe src={post.VideoURLs[0]} className='w-full absolute left-0 right-0 top-0 bottom-0 h-full feed-post__video' allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen></iframe>
+                                                </div>
+                                            </>
+                                        }
                                     </div>
                                 </div>  
                                 <div className='content flex flex-col w-full lg:w-2/4 pt-8 pb-4 px-8'>

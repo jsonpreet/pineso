@@ -75,7 +75,9 @@ export const getUserFeed = async ({queryKey}) => {
     } else {
         const posts = response.data.Posts;
         const filtered = posts.filter(post => {
-            return post.ImageURLs !== null && post.ImageURLs[0] !== '' && post.ImageURLs[0] !== undefined;
+            if ((post.ImageURLs !== null && post.ImageURLs.length > 0 && post.ImageURLs[0].URL !== '') || (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0].URL !== '')) {
+                return post
+            }
         });
 
         // filtered.map(async (post) => {

@@ -215,11 +215,11 @@ const Header = () => {
                                 className="bg-gray-100 outline-0 w-full focus:shadow-none focus:ring-4 focus:ring-[#5634ee]/50 px-4 h-[50px] rounded-full"
                                 onChange={(e) => onSearch(e)}
                                 onClick={() => isShowSuggestions()}
-                                onKeyPress={(e) => {
-                                    if (e.key === "Enter") {
-                                        router.push('/search?query='+e.target.value)
-                                    }
-                                }}
+                                // onKeyPress={(e) => {
+                                //     if (e.key === "Enter") {
+                                //         router.push('/search?query='+e.target.value)
+                                //     }
+                                // }}
                                 value={query}
                                 type="text"
                                 placeholder="Search"
@@ -269,11 +269,10 @@ const Header = () => {
                                                 {
                                                     recentSearch.map((search, index) => {
                                                         return (
-                                                            <Link href={`/search?query=${search}`} key={search} shallow={true}>
-                                                                <a onClick={() => setShowSuggestions(false)} className="font-semibold mr-2 bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">
-                                                                    <span>{search}</span>
-                                                                </a>
-                                                            </Link>    
+                                                            <span className="font-semibold mr-2 bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">{search}</span>
+                                                        // <Link href={`/search?query=${search}`} key={search} shallow={true} onClick={() => setShowSuggestions(false)} className="font-semibold mr-2 bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">
+                                                        //     <a><span>{search}</span></a>
+                                                        // </Link>     
                                                         )
                                                     })
                                                 }

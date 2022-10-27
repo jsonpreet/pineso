@@ -203,9 +203,10 @@ const SearchPage = () => {
                                     {
                                         recentSearches.map((search, index) => {
                                             return (
-                                                <Link href={`/search?query=${search}`} key={search} shallow={true} onClick={() => setShowSuggestions(false)} className="font-semibold mr-2 bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">
-                                                    <a><span>{search}</span></a>
-                                                </Link>    
+                                                <span className="font-semibold mr-2 bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">{search}</span>
+                                                // <Link href={`/search?query=${search}`} key={search} shallow={true} onClick={() => setShowSuggestions(false)} className="font-semibold mr-2 bg-gray-200 px-4 py-1 rounded-full hover:bg-black hover:text-white duration-75 delay-75">
+                                                //     <a><span>{search}</span></a>
+                                                // </Link>    
                                             )
                                         })
                                     }

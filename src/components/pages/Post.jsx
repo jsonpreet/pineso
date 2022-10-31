@@ -92,7 +92,7 @@ const PostPage = () => {
                         <div className='w-full max-w-[1024px] shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] rounded-3xl mx-auto'>
                             <div className='flex flex-col lg:flex-row overflow-visible'>
                                 <div className='relative top-0 left-0 z-10 flex-none w-full lg:w-2/4'>
-                                    <div ref={ref} className='image w-full border border-white/50 h-full rounded-3xl sm:rounded-bl-3xl sm:rounded-tl-3xl flex flex-col items-center justify-start p-4'>
+                                    <div ref={ref} className={`image w-full border border-white/50 h-full rounded-3xl sm:rounded-bl-3xl sm:rounded-tl-3xl flex flex-col items-center justify-start ${isImage ? `p-4`: ``}`}>
                                         {isImage &&
                                             <>
                                                 <div style={{ backgroundImage: `url(${post.ImageURLs[0]})`, filter: 'blur(3px)', opacity: '.2'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/>    
@@ -115,7 +115,8 @@ const PostPage = () => {
                                         }
                                         {isVideo && 
                                             <>
-                                                <div className='mt-2 feed-post__video-container bg-black relative pt-[56.25%] w-full rounded-xl h-[700px] max-h-[700px] overflow-hidden'>
+                                            <div style={{ backgroundImage: `url(${post.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.gif)`, filter: 'blur(3px)', opacity: '.2'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/> 
+                                                <div className='feed-post__video-container bg-black relative pt-[56.25%] w-full rounded-bl-3xl rounded-tl-3xl h-[700px] max-h-[700px] overflow-hidden'>
                                                     <iframe src={post.VideoURLs[0]} className='w-full absolute left-0 right-0 top-0 bottom-0 h-full feed-post__video' allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen></iframe>
                                                 </div>
                                             </>

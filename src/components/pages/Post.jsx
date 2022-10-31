@@ -37,18 +37,20 @@ const PostPage = () => {
 
     useEffect(() => {
         if (post) {
-            if (post.ImageURLs !== null && post.ImageURLs.length > 0 && post.ImageURLs[0] !== '') {
+            if (post.ImageURLs !== null && post.ImageURLs[0] !== '') {
                 setIsImage(true)
             }
-            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
+            if (post.VideoURLs !== null && post.VideoURLs[0] !== '') {
                 setIsVideo(true)
             }
-        }
         checkLength();
+        }
     }, [post])
 
+    console.log(post);
+
     const checkLength = () => {
-        (post.Body.length >= post.Body.substring(0, 300).length ) ? setReadMore(true) : setReadMore(false)
+        (post.Body.length >= post.Body.substring(0, 200).length ) ? setReadMore(true) : setReadMore(false)
     }
 
     const profileID = post?.ProfileEntryResponse.PublicKeyBase58Check;
@@ -115,7 +117,7 @@ const PostPage = () => {
                                         }
                                         {isVideo && 
                                             <>
-                                            <div style={{ backgroundImage: `url(${post.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.gif)`, filter: 'blur(3px)', opacity: '.2'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/> 
+                                            {/* <div style={{ backgroundImage: `url(${post.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.gif)`, filter: 'blur(3px)', opacity: '.2'}} className='w-full h-full backdrop-xl backdrop-blur-md p-4 absolute top-0 left-0 rounded-bl-3xl rounded-tl-3xl'/>  */}
                                                 <div className='feed-post__video-container bg-black relative pt-[56.25%] w-full rounded-3xl h-[700px] max-h-[700px] overflow-hidden'>
                                                     <iframe src={post.VideoURLs[0]} className='w-full absolute left-0 right-0 top-0 bottom-0 h-full feed-post__video' allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen></iframe>
                                                 </div>

@@ -37,17 +37,20 @@ const PostPage = () => {
 
     useEffect(() => {
         if (post) {
-            if (post.ImageURLs !== null && post.ImageURLs[0] !== '') {
+            console.log(post.ImageURLs)
+            console.log(post.VideoURLs)
+
+            if (post.ImageURLs !== null && post.ImageURLs !== '' && post.ImageURLs[0] !== '') {
                 setIsImage(true)
+                setIsVideo(false)
             }
-            if (post.VideoURLs !== null && post.VideoURLs[0] !== '') {
+            if (post.VideoURLs !== null && post.VideoURLs !== '' && post.VideoURLs[0] !== '') {
+                setIsImage(false)
                 setIsVideo(true)
             }
         checkLength();
         }
     }, [post])
-
-    console.log(post);
 
     const checkLength = () => {
         (post.Body.length >= post.Body.substring(0, 200).length ) ? setReadMore(true) : setReadMore(false)

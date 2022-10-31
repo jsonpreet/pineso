@@ -16,7 +16,7 @@ const Follow = ({user, profile}) => {
     const [loading, setLoader] = useState(false)
 
     const profileID = profile.PublicKeyBase58Check;
-    const userID = user.profile.PublicKeyBase58Check;
+    const userID = user?.profile?.PublicKeyBase58Check;
 
 
     // const isFollowing = getIsFollowing(userID, profileID);

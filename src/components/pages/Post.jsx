@@ -43,12 +43,12 @@ const PostPage = () => {
             if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
                 setIsVideo(true)
             }
-            checkLength();
         }
+        checkLength();
     }, [post])
 
     const checkLength = () => {
-        (post.Body.length >= post.Body.substring(0, 300).length ) ? setReadMore(false) : setReadMore(true)
+        (post.Body.length >= post.Body.substring(0, 300).length ) ? setReadMore(true) : setReadMore(false)
     }
 
     const profileID = post?.ProfileEntryResponse.PublicKeyBase58Check;
@@ -109,7 +109,7 @@ const PostPage = () => {
                                                     />
                                                 </div>
                                                 :
-                                                (post.ImageURLs[0] !== '') && <img className='rounded-3xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] object-cover' alt={`Pin by ${post.ProfileEntryResponse.Username}`} src={post.ImageURLs[0]} />
+                                                post.ImageURLs[0] !== '' && <img className='rounded-3xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] w-full object-cover' alt={`Pin by ${post.ProfileEntryResponse.Username}`} src={post.ImageURLs[0]} />
                                             }
                                             </>
                                         }

@@ -53,7 +53,7 @@ const PostPage = () => {
     }, [post])
 
     const checkLength = () => {
-        (post.Body.length >= post.Body.substring(0, 200).length ) ? setReadMore(true) : setReadMore(false)
+        (post.Body.length > 300 ) ? setReadMore(true) : setReadMore(false)
     }
 
     const profileID = post?.ProfileEntryResponse.PublicKeyBase58Check;

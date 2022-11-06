@@ -12,6 +12,8 @@ import { NextUIProvider } from '@nextui-org/react';
 import loadable from "@loadable/component";
 const Feedback = loadable(() => import("feeder-react-feedback/dist/Feedback"));
 
+import { Analytics } from '@vercel/analytics/react';
+
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient(config));
@@ -32,6 +34,7 @@ function MyApp({ Component, pageProps }) {
           </Hydrate>
         </QueryClientProvider>
       </ThemeProvider>
+      <Analytics />
     </>
   );
 }

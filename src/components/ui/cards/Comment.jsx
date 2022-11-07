@@ -22,7 +22,7 @@ const CommentCard = ({ isSub, comment, profile}) => {
     }, [comment])
 
     const checkLength = () => {
-        (comment.Body.length > comment.Body.substring(0, 100).length) ? setReadMore(false) : setReadMore(true)
+        (comment.Body.length > 100) ? setReadMore(false) : setReadMore(true)
     }
     return (
         <div className={`flex my-4 flex-col ${isSub ? `sub-comment` : ''}`}>

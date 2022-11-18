@@ -172,7 +172,7 @@ const ProfilePage = (props) => {
                        
                                 {userPostsIsLoading ?
                                     <div className='flex flex-row items-center justify-center'><Loader className={`h-7 w-7 text-[#ec05ad]`} /></div> :
-                                    <Grid posts={userPosts}/>
+                                    userPosts.length > 0 ? <Grid posts={userPosts}/> : <div className='text-center text-[#ec05ad] font-bold text-xl'>No Pins</div>
                                 }
                         </div>}
                         {active.saved && <div className='feedTab w-full mt-8'>

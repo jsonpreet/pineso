@@ -6,7 +6,7 @@ const Grid = ({ posts }) => {
         <>    
             <ResponsiveMasonry columnsCountBreakPoints={{350: 2, 750: 3, 900: 7}}>
                 <Masonry gutter='10px'>
-                    {posts.map((post, index) => {
+                    {posts.length > 0 && posts.map((post, index) => {
                         return <Post post={post} key={index} />
                     })}
                 </Masonry>

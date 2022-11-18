@@ -67,7 +67,7 @@ export const getUserFeed = async ({queryKey}) => {
     const endpoint = 'get-posts-for-public-key';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         PublicKeyBase58Check: publicKey,
-        NumToFetch: 150,
+        NumToFetch: 2500,
         MediaRequired: true,
     });
     if (response === null) {

@@ -7,7 +7,7 @@ export const getNFTFeed = async () => {
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 1000,
+        ResponseLimit: 2500,
         MediaRequired: true,
     });
     if (response === null) {

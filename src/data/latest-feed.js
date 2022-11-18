@@ -7,7 +7,7 @@ export const getLatestFeed = async ({limit}) => {
     const pins = [];
     const endpoint = 'get-posts-stateless';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        NumToFetch: limit ? limit : 2500,
+        NumToFetch: limit ? limit : 700,
         MediaRequired: true,
     });
     if (response === null) {

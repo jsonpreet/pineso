@@ -7,7 +7,7 @@ export const getGlobalFeed = async () => {
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 2500,
+        ResponseLimit: 700,
         FetchSubcomments: true,
         GetPostsForGlobalWhitelist: true,
         MediaRequired: true,

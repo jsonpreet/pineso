@@ -8,7 +8,7 @@ export const getSingleTagFeed = async ({ queryKey }) => {
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 300,
+        ResponseLimit: 700,
         FetchSubcomments: true,
         MediaRequired: true,
         SortByNew: true,

@@ -1,13 +1,17 @@
 import { BASE_URI, SUPPORTED_FORMATS } from "@app/lib/constants";
 import { getImageSize, get_url_extension } from "@app/lib/utils";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getHotFeed = async () => {
+export const getHotFeed = async (limit, seenPosts) => {
+    const seenPostLists = seenPosts.length > 0 ? seenPosts.map(
+        (post) => post.PostHashHex
+    ) : [];
     const pins = [];
     const endpoint = 'get-hot-feed';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ResponseLimit: 2500,
+        ResponseLimit: 700,
+        SeenPosts: seenPostLists,
         FetchSubcomments: true,
         MediaRequired: true,
         SortByNew: true
@@ -41,4 +45,20 @@ export const FetchHotFeed = () => {
     return useQuery(['hotfeed'], getHotFeed, {
         keepPreviousData: true,
     });
+}
+
+export const FetchInfiniteHotFeed = (limit) => {
+    return useInfiniteQuery(['infinite-hot-feed'], ({ pageParam = 0 }) => getHotFeed(limit, pageParam),
+        {
+            keepPreviousData: true,
+            getNextPageParam: (lastPage, pages) => {
+                if(lastPage === null) {
+                    return null;
+                } else {
+                    console.log(pages);
+                    return lastPage;
+                }
+            }
+        }
+    );
 }

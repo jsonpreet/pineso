@@ -12,7 +12,6 @@ const getSingleTagFeed = async (tag) => {
         SortByNew: true,
         Tag: tag.Hashtag,
     })
-    console.log(response.data)
     if (response === null) {
         return null
     } else {

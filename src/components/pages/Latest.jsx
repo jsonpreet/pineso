@@ -19,12 +19,10 @@ const LatestPage = () => {
     if (isFetched) {
         return (
             <>
-                {/* <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
-                    {posts?.length > 0 && posts.map((post, index) => {
-                        return <Post post={post} key={index} />
-                    })}
-                </div> */}
-                <Grid posts={posts} />
+                <div className='w-full lg:columns-7 sm:columns-3 gap-4'>
+                    {posts?.length > 0 && <Grid posts={posts} />}
+                </div>
+                
             </>
         )
     }

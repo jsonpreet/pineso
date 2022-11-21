@@ -9,7 +9,7 @@ export const getFollowingFeed = async ({queryKey}) => {
     const endpoint = 'get-posts-stateless';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         ReaderPublicKeyBase58Check: publicKey,
-        NumToFetch: 700,
+        NumToFetch: 500,
         MediaRequired: true,
         GetPostsForFollowFeed: true,
     });

@@ -27,8 +27,8 @@ class MyDocument extends Document {
                     <meta name="description" content="Build with Deso Blockchain" />
                     <link rel="icon" href="/favicon.ico" />
                     <meta name="twitter:card" content="summary_large_image" />
-                    <meta name="twitter:site" content="@pinesoio" />
-                    <meta name="twitter:creator" content="@pinesoio" />
+                    <meta name="twitter:site" content="@PinesoApp" />
+                    <meta name="twitter:creator" content="@PinesoApp" />
                     <meta property="og:image:alt" content="Pineso" />
                     <meta property="og:image:width" content="1200" />
                     <meta property="og:image:height" content="630" />

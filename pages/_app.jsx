@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }) {
             <NextUIProvider>
               <Component {...pageProps} />
             </NextUIProvider>
-            <Feedback primaryColor='#ec05ad' hoverBorderColor='#ec05ad' projectId={FEEDER_PROJECT_ID} />
+            {/* <Feedback primaryColor='#ec05ad' hoverBorderColor='#ec05ad' projectId={FEEDER_PROJECT_ID} /> */}
             <Devtools />
           </Hydrate>
         </QueryClientProvider>
